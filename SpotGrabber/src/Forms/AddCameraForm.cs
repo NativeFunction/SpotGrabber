@@ -109,44 +109,18 @@ namespace SpotGrabber
             Close();
         }
 
-        public bool CheckWebsite(string URL)
-        {
-            
-            try
-            {
-                WebRequest request = WebRequest.Create(URL);
-                request.GetResponse();
-                return true;
-            }
-            catch //If exception thrown then couldn't get response from address
-            {
-                return false;
-            }
-
-        }
-
-        void GetAxisSnapshot(object sender, NewFrameEventArgs e)
-        {
-            Mono.LoadBackgroundImage(e.Frame, "");
-
-            //e.Frame.Save(@"C:\Users\Rocko\Desktop\test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            ((MJPEGStream)sender).Stop();
-            ((MJPEGStream)sender).NewFrame -= GetAxisSnapshot;
-        }
+        
 
         private void LoadCameraButtonClick(object sender, EventArgs e)
         {
             if (CameraURLTextBox.Text != "" && ManufacturerComboBox.Text != "")
             {
-
-
-                if (CheckWebsite(CameraURLTextBox.Text))
+                if (Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer man))
                 {
-                    MJPEGStream stream = new MJPEGStream(CameraURLTextBox.Text);
-                    stream.NewFrame += GetAxisSnapshot;
-                    stream.Start();
-                    
+                    CameraData.DownloadCamImage(CameraURLTextBox.Text, man, (Bitmap bm) =>
+                    {
+                        Mono.LoadBackgroundImage(bm, NameTextBox.Text);
+                    });
                 }
             }
         }

@@ -16,8 +16,8 @@ namespace SpotGrabber
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-            //Application.Run(new LotGrabberForm());
+            //Application.Run(new MainForm());
+            Application.Run(new LotGrabberForm());
         }
     }
 }

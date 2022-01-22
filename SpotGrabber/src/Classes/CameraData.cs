@@ -3,9 +3,12 @@ using SharpDX.Direct2D1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
@@ -26,6 +29,20 @@ namespace SpotGrabber
         public LotSlotCollection Template;
 
         public CameraData() { }
+
+        public CameraData(CameraData cam) 
+        {
+            Name = cam.Name;
+            Manufacturer = cam.Manufacturer;
+            Url = cam.Url;
+            PostalCode = cam.PostalCode;
+            Quality = cam.Quality;
+            Angle = cam.Angle;
+            LotSize = cam.LotSize;
+            LastCaptureDate = cam.LastCaptureDate;
+            Template = new LotSlotCollection(cam.Template.LotName, cam.Template.Rects, cam.Template.CurrentImageBounds.Width, cam.Template.CurrentImageBounds.Height);
+
+        }
 
         public CameraData(XmlNode camNode)
         {
@@ -103,7 +120,43 @@ namespace SpotGrabber
             Template.AddXML(doc, itemNode);
         }
 
-        public bool CheckWebsite(string URL)
+        public void UpdateXML(XmlDocument doc, XmlNode baseNode)
+        {
+            //base node = cam item
+            XmlElement element;
+
+            element = (XmlElement)baseNode.SelectSingleNode("Name");
+            element.InnerText = Name;
+
+            //no need to update non-updatable options
+            //element = (XmlElement)baseNode.SelectSingleNode("Manufacturer");
+            //element.InnerText = Manufacturer.ToString();
+
+            //element = (XmlElement)baseNode.SelectSingleNode("Url");
+            //element.SetAttribute("value", Url);
+
+            element = (XmlElement)baseNode.SelectSingleNode("PostalCode");
+            element.SetAttribute("value", PostalCode);
+
+            element = (XmlElement)baseNode.SelectSingleNode("Quality");
+            element.SetAttribute("value", ((int)Quality).ToString());
+
+            element = (XmlElement)baseNode.SelectSingleNode("Angle");
+            element.SetAttribute("value", Angle.ToString());
+
+            element = (XmlElement)baseNode.SelectSingleNode("LotSize");
+            element.SetAttribute("value", ((int)LotSize).ToString());
+
+            element = (XmlElement)baseNode.SelectSingleNode("LastCaptureDate");
+            element.InnerText = LastCaptureDate;
+
+            baseNode.RemoveChild(baseNode.SelectSingleNode("LotSlotCollection"));
+
+            Template.AddXML(doc, baseNode);
+        }
+
+
+        static public bool CheckWebsite(string URL)
         {
             try
             {
@@ -117,33 +170,39 @@ namespace SpotGrabber
 
         }
 
-
         public void DownloadCamImage(Action<System.Drawing.Bitmap> func)
         {
-            if (Url != "" && Manufacturer != CameraManufacturer.None)
+            DownloadCamImage(Url, Manufacturer, func);
+        }
+
+        static public void DownloadCamImage(string url, CameraManufacturer man, Action<System.Drawing.Bitmap> func)
+        {
+            if (url != "" && man != CameraManufacturer.None)
             {
-                if (CheckWebsite(Url))
+                if (CheckWebsite(url))
                 {
-                    switch (Manufacturer)
+                    switch (man)
                     {
                         case CameraManufacturer.Axis:
-                            MJPEGStream stream = new MJPEGStream(Url);
-                            bool needImage = true;
-                            stream.NewFrame += (object sender, NewFrameEventArgs e) => 
+                            MJPEGStream stream = new MJPEGStream(url);
+                            NewFrameEventHandler l = null;
+
+                            l = (object sender, NewFrameEventArgs e) =>
                             {
-                                if (needImage)
-                                {
-                                    func(e.Frame);
-                                    stream.Stop();
-                                }
-                                else
-                                    needImage = false;
+                                func(e.Frame);
+                                ((MJPEGStream)sender).NewFrame -= l;
+                                ((MJPEGStream)sender).Stop();
                             };
+
+
+                            stream.NewFrame += l;
+
                             stream.Start();
                             break;
                     }
                 }
             }
         }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Forms.Services;
+using SharpDX.WIC;
+using SpotGrabber.src.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +25,10 @@ namespace SpotGrabber
         XmlDocument camDoc = new XmlDocument();
         XmlElement ccNode;
         List<CameraData> cams = new List<CameraData>();
+        int contextMenuIndex = 0;
+
+
+
         public LotGrabberForm()
         {
             InitializeComponent();
@@ -58,6 +64,11 @@ namespace SpotGrabber
 
         }
 
+        private void LotGrabberFormLoad(object sender, EventArgs e)
+        {
+            CamTable.ClearSelection();
+        }
+
         private void AddCameraButtonClick(object sender, EventArgs e)
         {
             //CamTable.Rows.Add("Hi3516-302000", "Hi3516", "302000", "Good", "≈ 90°", "Large", "011022-0415");
@@ -77,9 +88,7 @@ namespace SpotGrabber
                 cams.Add(cam);
 
 
-                CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), cam.PostalCode, Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(CameraManufacturer), cam.LotSize), cam.LastCaptureDate);
-
-                Directory.CreateDirectory($"Data/{cam.Name}");
+                CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), cam.PostalCode, Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate);
 
             }
 
@@ -89,14 +98,60 @@ namespace SpotGrabber
         private void ExportSpotsButtonClick(object sender, EventArgs e)
         {
             Directory.CreateDirectory("Data/Spots");
+            Directory.CreateDirectory("Data/Spots/Empty");//for later manual sort
+            Directory.CreateDirectory("Data/Spots/Filled");
 
             foreach (var cam in cams)
             {
-                cam.DownloadCamImage((Bitmap bm) =>
+                cam.DownloadCamImage((System.Drawing.Bitmap bm) =>
                 {
                     cam.Template.ExportImages($"Data/Spots/{cam.Name}{cam.LastCaptureDate}", bm);
                 });
             }
+        }
+
+
+        private void CamTableCellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
+            {
+                DataGridViewCell c = (sender as DataGridView)[e.ColumnIndex, e.RowIndex];
+                if (!c.Selected)
+                {
+                    c.DataGridView.ClearSelection();
+                    c.DataGridView.CurrentCell = c;
+                    c.Selected = true;
+                }
+
+
+                var relativeMousePosition = CamTable.PointToClient(Cursor.Position);
+
+                contextMenuIndex = e.RowIndex;
+                CamTableContextMenu.Show(CamTable, relativeMousePosition);
+            }
+        }
+
+        private void EditCamContextMenuClick(object sender, EventArgs e)
+        {
+            CameraData cam = new CameraData(cams[contextMenuIndex]);
+
+            EditCameraForm acf = new EditCameraForm(cam);
+            acf.ShowDialog();
+            
+            if (cam.IsValid())
+            {
+                cams[contextMenuIndex] = cam;
+                XmlNode camNode = ccNode.SelectNodes("/CamCollection/Item")[contextMenuIndex];
+                
+                cam.UpdateXML(camDoc, camNode);
+                
+                camDoc.Save("Data/Cams.xml");
+            }
+        }
+
+        private void LotGrabberForm_Click(object sender, EventArgs e)
+        {
+            CamTable.ClearSelection();
         }
     }
 }

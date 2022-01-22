@@ -22,7 +22,7 @@ namespace SpotGrabber
     public class LotSlotCollection
     {
         Line currentLine = new Line();
-        List<DynamicRectangle> rects = new List<DynamicRectangle>(4);
+        public List<DynamicRectangle> Rects = new List<DynamicRectangle>(4);
 
         Vector2 currentSelectPoint = default;
         ControlType isAdjRect = ControlType.None;
@@ -50,6 +50,14 @@ namespace SpotGrabber
             LotName = lotName;
         }
 
+        public LotSlotCollection(string lotName, List<DynamicRectangle> _rects, int imageWidth, int imageHeight)
+        {
+            CurrentImageBounds.Height = imageHeight;
+            CurrentImageBounds.Width = imageWidth;
+            Rects = _rects;
+            LotName = lotName;
+        }
+
 
         public void Update(Rectangle imageBounds)
         {
@@ -58,7 +66,7 @@ namespace SpotGrabber
                 Vector2 scaleP = new Vector2((float)imageBounds.Height / CurrentImageBounds.Height, (float)imageBounds.Width / CurrentImageBounds.Width);
 
 
-                foreach (var rect in rects)
+                foreach (var rect in Rects)
                 {
                     rect.Offset *= scaleP;
                     rect.Scale(scaleP);
@@ -76,7 +84,7 @@ namespace SpotGrabber
                 if (InputManager.IsMouseButtonJustPressed(MouseInputButtons.LeftButton))
                 {
 
-                    foreach (var rect in rects)
+                    foreach (var rect in Rects)
                     {
                         var hh = InputManager.GetMousePosVec();
                         if (rect.ContainsInner(InputManager.GetMousePosVec()))//position
@@ -167,7 +175,7 @@ namespace SpotGrabber
         public void Clear()
         {
             currentLine = new Line();
-            rects.Clear();
+            Rects.Clear();
         }
 
         public void AddLine(Line l)
@@ -175,7 +183,7 @@ namespace SpotGrabber
             var dr = new DynamicRectangle(l);
             if (dr.isLineValid())
             {
-                rects.Add(dr);
+                Rects.Add(dr);
             }
         }
 
@@ -188,7 +196,7 @@ namespace SpotGrabber
                 sb.DrawLine(currentLine.Point1, InputManager.GetMousePosVec(), Color.Black);
 
             ActiveCursor = Cursors.Cross;
-            foreach (var rect in rects)
+            foreach (var rect in Rects)
             {
                 rect.Draw(sb);
 
@@ -223,7 +231,7 @@ namespace SpotGrabber
 
         public bool HasData()
         {
-            return rects.Count > 0;
+            return Rects.Count > 0;
         }
 
         public void OutputXML(string path)
@@ -240,9 +248,9 @@ namespace SpotGrabber
             lscNode.AppendChild(drdNode);
 
 
-            for (int i = 0; i < rects.Count; i++)
+            for (int i = 0; i < Rects.Count; i++)
             {
-                var rect = rects[i];
+                var rect = Rects[i];
                 var itemNode = doc.CreateNode(XmlNodeType.Element, "Item", "");
                 drdNode.AppendChild(itemNode);
 
@@ -292,9 +300,9 @@ namespace SpotGrabber
             lscNode.AppendChild(drdNode);
 
 
-            for (int i = 0; i < rects.Count; i++)
+            for (int i = 0; i < Rects.Count; i++)
             {
-                var rect = rects[i];
+                var rect = Rects[i];
                 var itemNode = doc.CreateNode(XmlNodeType.Element, "Item", "");
                 drdNode.AppendChild(itemNode);
 
@@ -379,7 +387,7 @@ namespace SpotGrabber
 
                 DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY), new Vector2(BottomLeftX, BottomLeftY), new Vector2(BottomRightX, BottomRightY) }), rotation, new Vector2(OffsetX, OffsetY));
 
-                rects.Add(dr);
+                Rects.Add(dr);
 
             }
 
@@ -392,28 +400,28 @@ namespace SpotGrabber
             //rotate
             //cut and save
 
-            for (int i = 0; i < rects.Count; i++)
+            for (int i = 0; i < Rects.Count; i++)
             {
                 //scale percent
                 float px = image.Width / (float)CurrentImageBounds.Width;
                 float py = image.Height / (float)CurrentImageBounds.Height;
 
-                rects[i].Rect.Rotate(-rects[i].Rotation);
+                Rects[i].Rect.Rotate(-Rects[i].Rotation);
 
-                int rectWidthNoRot = (int)(Math.Ceiling(-rects[i].Rect.Left + rects[i].Rect.Right) * px);
-                int rectHeightNoRot = (int)(Math.Ceiling(-rects[i].Rect.Top + rects[i].Rect.Bottom) * py);
+                int rectWidthNoRot = (int)(Math.Ceiling(-Rects[i].Rect.Left + Rects[i].Rect.Right) * px);
+                int rectHeightNoRot = (int)(Math.Ceiling(-Rects[i].Rect.Top + Rects[i].Rect.Bottom) * py);
 
-                rects[i].Rect.Rotate(rects[i].Rotation);
+                Rects[i].Rect.Rotate(Rects[i].Rotation);
 
 
-                int snapshotWidth = (int)(Math.Ceiling(-rects[i].Rect.Left + rects[i].Rect.Right) * px);
-                int snapshotHeight = (int)(Math.Ceiling(-rects[i].Rect.Top + rects[i].Rect.Bottom) * py);
+                int snapshotWidth = (int)(Math.Ceiling(-Rects[i].Rect.Left + Rects[i].Rect.Right) * px);
+                int snapshotHeight = (int)(Math.Ceiling(-Rects[i].Rect.Top + Rects[i].Rect.Bottom) * py);
 
                 Color[] colors = new Color[snapshotWidth * snapshotHeight];
-                image.GetData<Color>(0, new Rectangle((int)(rects[i].Offset.X * px - snapshotWidth / 2), (int)(rects[i].Offset.Y * py - snapshotHeight / 2), snapshotWidth, snapshotHeight), colors, 0, snapshotWidth * snapshotHeight);
+                image.GetData<Color>(0, new Rectangle((int)(Rects[i].Offset.X * px - snapshotWidth / 2), (int)(Rects[i].Offset.Y * py - snapshotHeight / 2), snapshotWidth, snapshotHeight), colors, 0, snapshotWidth * snapshotHeight);
                 System.Drawing.Bitmap b = new System.Drawing.Bitmap(snapshotWidth, snapshotHeight);
 
-                
+
                 ImageProcessor.ImageFactory l = new ImageProcessor.ImageFactory();
 
 
@@ -426,7 +434,7 @@ namespace SpotGrabber
                 l.Load(b);
                 l.Resolution(snapshotWidth, snapshotHeight);
 
-                l.Rotate(-MyMathHelper.RadToDeg(rects[i].Rotation));
+                l.Rotate(-MyMathHelper.RadToDeg(Rects[i].Rotation));
 
 
                 l.Crop(new System.Drawing.Rectangle(MyMathHelper.Clamp((l.Image.Width - rectWidthNoRot) / 2, 0, l.Image.Width), MyMathHelper.Clamp((l.Image.Height - rectHeightNoRot) / 2, 0, l.Image.Height), rectWidthNoRot, rectHeightNoRot));
@@ -443,41 +451,44 @@ namespace SpotGrabber
             //get rect containing rot
             //rotate
             //cut and save
-
-            for (int i = 0; i < rects.Count; i++)
+            if (image != null)
             {
-                //scale percent
-                float px =  image.Width / (float)CurrentImageBounds.Width;
-                float py =  image.Height/ (float)CurrentImageBounds.Height;
+                for (int i = 0; i < Rects.Count; i++)
+                {
+                    //scale percent
+                    float px = image.Width / (float)CurrentImageBounds.Width;
+                    float py = image.Height / (float)CurrentImageBounds.Height;
 
-                rects[i].Rect.Rotate(-rects[i].Rotation);
+                    Rects[i].Rect.Rotate(-Rects[i].Rotation);
 
-                int rectWidthNoRot = (int)(Math.Ceiling(-rects[i].Rect.Left + rects[i].Rect.Right) * px);
-                int rectHeightNoRot = (int)(Math.Ceiling(-rects[i].Rect.Top + rects[i].Rect.Bottom) * py);
+                    int rectWidthNoRot = (int)(Math.Ceiling(-Rects[i].Rect.Left + Rects[i].Rect.Right) * px);
+                    int rectHeightNoRot = (int)(Math.Ceiling(-Rects[i].Rect.Top + Rects[i].Rect.Bottom) * py);
 
-                rects[i].Rect.Rotate(rects[i].Rotation);
+                    Rects[i].Rect.Rotate(Rects[i].Rotation);
 
 
-                int snapshotWidth = (int)(Math.Ceiling(-rects[i].Rect.Left + rects[i].Rect.Right) * px);
-                int snapshotHeight = (int)(Math.Ceiling(-rects[i].Rect.Top + rects[i].Rect.Bottom) * py);
+                    int snapshotWidth = (int)(Math.Ceiling(-Rects[i].Rect.Left + Rects[i].Rect.Right) * px);
+                    int snapshotHeight = (int)(Math.Ceiling(-Rects[i].Rect.Top + Rects[i].Rect.Bottom) * py);
 
-                
 
-                System.Drawing.Bitmap b = image.Clone(new System.Drawing.Rectangle((int)(rects[i].Offset.X * px - snapshotWidth / 2), (int)(rects[i].Offset.Y * py - snapshotHeight / 2), snapshotWidth, snapshotHeight), image.PixelFormat);
 
-                //b.Save(@"C:\Users\Rocko\Desktop\" + i.ToString() + ".jpg",System.Drawing.Imaging.ImageFormat.Jpeg);
+                    System.Drawing.Bitmap b = image.Clone(new System.Drawing.Rectangle((int)(Rects[i].Offset.X * px - snapshotWidth / 2), (int)(Rects[i].Offset.Y * py - snapshotHeight / 2), snapshotWidth, snapshotHeight), image.PixelFormat);
 
-                ImageProcessor.ImageFactory l = new ImageProcessor.ImageFactory();
-                
-                l.Load(b);
-                l.Resolution(snapshotWidth, snapshotHeight);
-                
-                l.Rotate(-MyMathHelper.RadToDeg(rects[i].Rotation));
-                
-                
-                l.Crop(new System.Drawing.Rectangle(MyMathHelper.Clamp((l.Image.Width - rectWidthNoRot) / 2, 0, l.Image.Width), MyMathHelper.Clamp((l.Image.Height - rectHeightNoRot) / 2, 0, l.Image.Height), rectWidthNoRot, rectHeightNoRot));
-                l.Save(path + $"_spot" + i.ToString() + ".jpg");
+                    //b.Save(@"C:\Users\Rocko\Desktop\" + i.ToString() + ".jpg",System.Drawing.Imaging.ImageFormat.Jpeg);
 
+                    ImageProcessor.ImageFactory l = new ImageProcessor.ImageFactory();
+
+                    l.Load(b);
+
+                    l.Resolution(snapshotWidth, snapshotHeight);
+
+                    l.Rotate(-MyMathHelper.RadToDeg(Rects[i].Rotation));
+
+
+                    l.Crop(new System.Drawing.Rectangle(MyMathHelper.Clamp((l.Image.Width - rectWidthNoRot) / 2, 0, l.Image.Width), MyMathHelper.Clamp((l.Image.Height - rectHeightNoRot) / 2, 0, l.Image.Height), rectWidthNoRot, rectHeightNoRot));
+                    l.Save(path + $"_spot" + i.ToString() + ".jpg");
+
+                }
             }
         }
 

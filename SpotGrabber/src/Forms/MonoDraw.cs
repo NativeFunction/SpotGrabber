@@ -104,14 +104,17 @@ namespace SpotGrabber
             lsc = new LotSlotCollection(Path.GetFileNameWithoutExtension(path));
         }
 
-        public void LoadBackgroundImage(System.Drawing.Bitmap bm, string lotName)
+        public void LoadBackgroundImage(System.Drawing.Bitmap bm, string lotName, LotSlotCollection collection = null)
         {
             using (MemoryStream s = new MemoryStream())
             {
                 bm.Save(s, System.Drawing.Imaging.ImageFormat.Jpeg);
                 s.Seek(0, SeekOrigin.Begin);
                 Image = Texture2D.FromStream(Editor.graphics, s);
-                lsc = new LotSlotCollection(lotName);
+                if (collection == null)
+                    lsc = new LotSlotCollection(lotName);
+                else
+                    lsc = collection;
             }
         }
     }

@@ -65,6 +65,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="SharpDX, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Forms.DX.2.4.0\lib\net451\SharpDX.dll</HintPath>
     </Reference>
@@ -122,6 +123,12 @@
     <Compile Include="src\Forms\AddCameraForm.Designer.cs">
       <DependentUpon>AddCameraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\EditCameraForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\EditCameraForm.Designer.cs">
+      <DependentUpon>EditCameraForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Forms\LotGrabber.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +148,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="src\Forms\AddCameraForm.resx">
       <DependentUpon>AddCameraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\EditCameraForm.resx">
+      <DependentUpon>EditCameraForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\LotGrabber.resx">
       <DependentUpon>LotGrabber.cs</DependentUpon>
