@@ -48,8 +48,8 @@ namespace SpotGrabber
             // 
             // AddCameraButton
             // 
-            this.AddCameraButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.AddCameraButton.Location = new System.Drawing.Point(12, 416);
+            this.AddCameraButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.AddCameraButton.Location = new System.Drawing.Point(12, 434);
             this.AddCameraButton.Name = "AddCameraButton";
             this.AddCameraButton.Size = new System.Drawing.Size(116, 38);
             this.AddCameraButton.TabIndex = 4;
@@ -62,6 +62,9 @@ namespace SpotGrabber
             this.CamTable.AllowUserToAddRows = false;
             this.CamTable.AllowUserToDeleteRows = false;
             this.CamTable.AllowUserToResizeRows = false;
+            this.CamTable.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CamTable.BackgroundColor = System.Drawing.SystemColors.Control;
             this.CamTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.CamTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -81,14 +84,14 @@ namespace SpotGrabber
             this.CamTable.RowHeadersWidth = 51;
             this.CamTable.RowTemplate.Height = 24;
             this.CamTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.CamTable.Size = new System.Drawing.Size(927, 374);
+            this.CamTable.Size = new System.Drawing.Size(927, 394);
             this.CamTable.TabIndex = 5;
             this.CamTable.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.CamTableCellMouseUp);
             // 
             // ExportSpotsButton
             // 
             this.ExportSpotsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExportSpotsButton.Location = new System.Drawing.Point(823, 416);
+            this.ExportSpotsButton.Location = new System.Drawing.Point(823, 434);
             this.ExportSpotsButton.Name = "ExportSpotsButton";
             this.ExportSpotsButton.Size = new System.Drawing.Size(116, 38);
             this.ExportSpotsButton.TabIndex = 6;
@@ -178,7 +181,7 @@ namespace SpotGrabber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 573);
+            this.ClientSize = new System.Drawing.Size(951, 495);
             this.Controls.Add(this.ExportSpotsButton);
             this.Controls.Add(this.CamTable);
             this.Controls.Add(this.AddCameraButton);

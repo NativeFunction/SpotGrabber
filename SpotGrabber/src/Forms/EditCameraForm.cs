@@ -36,7 +36,7 @@ namespace SpotGrabber.src.Forms
 
         void LoadCamera()
         {
-            Cam.DownloadCamImage((Bitmap bm) =>
+            Cam.DownloadCamImage((Bitmap bm, int i) =>
             {
                 Mono.LoadBackgroundImage(bm, Cam.Name, Cam.Template);
             });
@@ -62,8 +62,7 @@ namespace SpotGrabber.src.Forms
             if (Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
                 Cam.LotSize = ls;
 
-            var date = DateTime.Now;
-            Cam.LastCaptureDate = $"{date:dd}{date:MM}{date:yy}-{date:HH}{date:mm}";
+            Cam.UpdateLastCaptureDate();
 
             Cam.Template = Mono.lsc;
 

@@ -93,9 +93,7 @@ namespace SpotGrabber
             if (Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
                 Cam.LotSize = ls;
 
-            var date = DateTime.Now;
-            Cam.LastCaptureDate = $"{date:dd}{date:MM}{date:yy}-{date:HH}{date:mm}";
-
+            Cam.UpdateLastCaptureDate();
 
             Cam.Template = Mono.lsc;
 
@@ -117,7 +115,7 @@ namespace SpotGrabber
             {
                 if (Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer man))
                 {
-                    CameraData.DownloadCamImage(CameraURLTextBox.Text, man, (Bitmap bm) =>
+                    CameraData.DownloadCamImage(CameraURLTextBox.Text, man, (Bitmap bm, int i) =>
                     {
                         Mono.LoadBackgroundImage(bm, NameTextBox.Text);
                     });

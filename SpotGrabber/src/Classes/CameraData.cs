@@ -155,12 +155,22 @@ namespace SpotGrabber
             Template.AddXML(doc, baseNode);
         }
 
+        public void UpdateXMLLastCaptureDate(XmlNode baseNode)
+        {
+            //base node = cam item
+            XmlElement element;
+
+            element = (XmlElement)baseNode.SelectSingleNode("LastCaptureDate");
+            element.InnerText = LastCaptureDate;
+
+        }
+
 
         static public bool CheckWebsite(string URL)
         {
             try
             {
-                WebRequest.Create(URL).GetResponse();
+                using (_ = WebRequest.Create(URL).GetResponse()) { }
                 return true;
             }
             catch
@@ -170,12 +180,12 @@ namespace SpotGrabber
 
         }
 
-        public void DownloadCamImage(Action<System.Drawing.Bitmap> func)
+        public void DownloadCamImage(Action<System.Drawing.Bitmap, int> func, int index = 0)
         {
-            DownloadCamImage(Url, Manufacturer, func);
+            DownloadCamImage(Url, Manufacturer, func, index);
         }
 
-        static public void DownloadCamImage(string url, CameraManufacturer man, Action<System.Drawing.Bitmap> func)
+        static public void DownloadCamImage(string url, CameraManufacturer man, Action<System.Drawing.Bitmap, int> func, int index = 0)
         {
             if (url != "" && man != CameraManufacturer.None)
             {
@@ -189,7 +199,7 @@ namespace SpotGrabber
 
                             l = (object sender, NewFrameEventArgs e) =>
                             {
-                                func(e.Frame);
+                                func(e.Frame, index);
                                 ((MJPEGStream)sender).NewFrame -= l;
                                 ((MJPEGStream)sender).Stop();
                             };
@@ -202,6 +212,12 @@ namespace SpotGrabber
                     }
                 }
             }
+        }
+
+        public void UpdateLastCaptureDate()
+        {
+            var date = DateTime.Now;
+            LastCaptureDate = $"{date:dd}{date:MM}{date:yy}-{date:HH}{date:mm}";
         }
 
     }
