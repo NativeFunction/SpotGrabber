@@ -74,25 +74,25 @@ namespace SpotGrabber
             //CamTable.Rows.Add("Hi3516-302000", "Hi3516", "302000", "Good", "≈ 90°", "Large", "011022-0415");
             //CamTable.Rows.Insert(0, "one", "two", "three", "four");
 
-            RefreshCamTable();
+            //RefreshCamTable();
 
-            //CameraData cam = new CameraData();
-            //AddCameraForm acf = new AddCameraForm(ref cam);
-            //acf.ShowDialog();
-            //
-            //if (cam.IsValid())
-            //{
-            //
-            //    cam.CreateXML(camDoc, ccNode);
-            //
-            //
-            //    camDoc.Save("Data/Cams.xml");
-            //    cams.Add(cam);
-            //
-            //
-            //    CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), cam.PostalCode, Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate);
-            //
-            //}
+            CameraData cam = new CameraData();
+            AddCameraForm acf = new AddCameraForm(ref cam);
+            acf.ShowDialog();
+            
+            if (cam.IsValid())
+            {
+            
+                cam.CreateXML(camDoc, ccNode);
+            
+            
+                camDoc.Save("Data/Cams.xml");
+                cams.Add(cam);
+            
+            
+                CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), cam.PostalCode, Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate);
+            
+            }
 
 
         }
