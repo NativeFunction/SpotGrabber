@@ -225,7 +225,7 @@ namespace SpotGrabber
                             }
                         }
                     }
-                    return ControlType.Rotate;
+                    return ControlType.Position;// ControlType.Rotate;
 
                 }
                 return ControlType.None;
