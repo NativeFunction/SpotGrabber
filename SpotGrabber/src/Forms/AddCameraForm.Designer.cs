@@ -96,6 +96,7 @@ namespace SpotGrabber
             this.ManufacturerComboBox.FormattingEnabled = true;
             this.ManufacturerComboBox.Items.AddRange(new object[] {
             "Axis",
+            "ChannelVision",
             "Hi3516",
             "Megapixel",
             "AxisMkII",

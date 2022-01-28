@@ -112,7 +112,7 @@ namespace SpotGrabber
                     cam.UpdateLastCaptureDate();
                     cam.UpdateXMLLastCaptureDate(camNodes[index]);
                     
-                    cam.Template.ExportImages($"Data/Spots/{cam.Name}{cam.LastCaptureDate}", bm);
+                    cam.Template.ExportImages($"Data/Spots/{cam.Name}_{cam.LastCaptureDate}", bm);
 
                     if (index == cams.Count - 1)
                     {

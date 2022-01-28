@@ -90,7 +90,7 @@ namespace SpotGrabber
         public void Rotate(float rot)
         {
             Rect.Rotate(-Rotation);
-            Rotation += MyMathHelper.Clamp(rot, -(float)Math.PI / 16f, (float)Math.PI / 16f);
+            Rotation += rot;
             BuildRect();
         }
 

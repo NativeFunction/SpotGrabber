@@ -193,6 +193,7 @@ namespace SpotGrabber
                 {
                     switch (man)
                     {
+                        case CameraManufacturer.ChannelVision:
                         case CameraManufacturer.Axis:
                             MJPEGStream stream = new MJPEGStream(url);
                             NewFrameEventHandler l = null;

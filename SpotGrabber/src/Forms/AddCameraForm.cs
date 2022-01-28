@@ -13,32 +13,6 @@ using System.Windows.Forms;
 
 namespace SpotGrabber
 {
-    public enum CameraManufacturer
-    {
-        Axis,
-        Hi3516,
-        Megapixel,
-        AxisMkII,
-        PanasonicHD,
-        None
-    }
-
-    public enum CameraQuality
-    {
-        Low,
-        Medium,
-        High,
-        None
-    }
-
-    public enum LotSize
-    {
-        Small,
-        Medium,
-        Large,
-        None
-    }
-
     public partial class AddCameraForm : Form
     {
 
@@ -93,7 +67,8 @@ namespace SpotGrabber
             if (Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
                 Cam.LotSize = ls;
 
-            Cam.UpdateLastCaptureDate();
+            //no need to update since we did not save capture
+            //Cam.UpdateLastCaptureDate();
 
             Cam.Template = Mono.lsc;
 

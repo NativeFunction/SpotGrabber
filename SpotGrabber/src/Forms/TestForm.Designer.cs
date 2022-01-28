@@ -1,7 +1,7 @@
 ﻿
 namespace SpotGrabber
 {
-    partial class MainForm
+    partial class TestForm
     {
         /// <summary>
         /// Required designer variable.
@@ -97,7 +97,7 @@ namespace SpotGrabber
             this.ExportImagesButton.UseVisualStyleBackColor = true;
             this.ExportImagesButton.Click += new System.EventHandler(this.ExportImagesButtonClick);
             // 
-            // MainForm
+            // TestForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -109,7 +109,7 @@ namespace SpotGrabber
             this.Controls.Add(this.Mono);
             this.Controls.Add(this.ClearRectsButton);
             this.MinimumSize = new System.Drawing.Size(480, 360);
-            this.Name = "MainForm";
+            this.Name = "TestForm";
             this.Text = "SpotGrabber";
             this.ResumeLayout(false);
 

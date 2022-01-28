@@ -15,11 +15,11 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace SpotGrabber
 {
-    public partial class MainForm : Form
+    public partial class TestForm : Form
     {
 
         Bitmap bm = null;
-        public MainForm()
+        public TestForm()
         {
             InitializeComponent();
         }

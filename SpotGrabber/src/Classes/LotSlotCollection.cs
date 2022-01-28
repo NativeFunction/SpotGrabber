@@ -30,6 +30,7 @@ namespace SpotGrabber
         public Cursor ActiveCursor = Cursors.Cross;
         public Rectangle CurrentImageBounds = default;
         public string LotName = "UNDEFINED";
+        float initRot = 0;
 
         public LotSlotCollection(string lotName)
         {
@@ -100,6 +101,8 @@ namespace SpotGrabber
                             isAdjRect = rect.GetSelectAreaType(currentSelectPoint);
                             adjRect = rect;
 
+                            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                            initRot = (float)Math.Atan2(point.Y, point.X);
                         }
 
                     }
@@ -150,9 +153,12 @@ namespace SpotGrabber
 
                             case ControlType.Rotate:
                                 {
-                                    Vector2 point = InputManager.GetMousePosVec() - currentSelectPoint;
-                                    adjRect.Rotate((float)Math.Atan2(point.Y, point.X));
-                                    currentSelectPoint = InputManager.GetMousePosVec();
+                                    Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                                    float rot = (float)Math.Atan2(point.Y, point.X);
+
+                                    adjRect.Rotate(rot - initRot);
+
+                                    initRot = (float)Math.Atan2(point.Y, point.X);
                                 }
                                 break;
                         }
@@ -446,7 +452,6 @@ namespace SpotGrabber
                 }
             }
         }
-
 
         public void ExportImages(string path, System.Drawing.Bitmap image)
         {

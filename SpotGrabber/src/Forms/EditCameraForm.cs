@@ -62,7 +62,9 @@ namespace SpotGrabber.src.Forms
             if (Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
                 Cam.LotSize = ls;
 
-            Cam.UpdateLastCaptureDate();
+            //no need to update since we did not save capture
+            //Cam.UpdateLastCaptureDate();
+
 
             Cam.Template = Mono.lsc;
 
