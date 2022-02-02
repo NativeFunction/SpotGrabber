@@ -232,7 +232,11 @@ namespace SpotGrabber
 
             //draw current line
             if (currentLine.Point1 != new Vector2(-1, -1))
-                sb.DrawLine(currentLine.Point1, InputManager.GetMousePosVec(), Color.Black);
+            {
+                //sb.DrawLine(currentLine.Point1, InputManager.GetMousePosVec(), Color.Black);
+                var size = InputManager.GetMousePosVec() - currentLine.Point1;
+                sb.DrawRectangle(currentLine.Point1.X, currentLine.Point1.Y, size.X, size.Y, Color.Black);
+            }
 
             bool btn = !InputManager.IsMouseButtonPressed(MouseInputButtons.LeftButton);
 
@@ -242,7 +246,7 @@ namespace SpotGrabber
             foreach (var rect in Rects)
             {
                 rect.Draw(sb);
-                
+
                 if (btn)
                 {
                     switch (rect.GetSelectAreaType(InputManager.GetMousePosVec()))

@@ -28,6 +28,7 @@ namespace SpotGrabber
         {
             SetLine(line);
         }
+
         public DynamicRectangle(Polygon rect, float rotation, Vector2 offset)
         {
             Rect = rect;
@@ -141,7 +142,6 @@ namespace SpotGrabber
                 rect.Rotate(Rotation);
         }
 
-
         public void SetPositionLocal(Vector2 pos)
         {
             Offset += pos;
@@ -159,7 +159,7 @@ namespace SpotGrabber
             Vector2 scaleToPointDiv2 = scaleToPoint / 2;
 
             List<Vector2> scaledRect;
-            
+
 
             switch (scaleType)
             {
@@ -223,7 +223,7 @@ namespace SpotGrabber
                     scaledRect[3] = -scaledRect[1];
 
                     scaleToPoint.Y = 0;
-                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(1,-1);
+                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(1, -1);
                     break;
                 case ControlType.ScaleMidLeft:
                     scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation);
@@ -304,6 +304,7 @@ namespace SpotGrabber
         {
             return Rect.Contains(pos - Offset);
         }
+
         public bool ContainsInner(Vector2 pos)
         {
             return InnerRect.Contains(pos - Offset);
@@ -311,7 +312,6 @@ namespace SpotGrabber
 
         //scale: corner, mid
         //rotate: the rest
-
 
         public ControlType GetSelectAreaType(Vector2 pos)
         {
@@ -330,7 +330,7 @@ namespace SpotGrabber
                             //top center, center right, center bottom, center left
                             switch (i)
                             {
-                                
+
                                 case 0:
                                     return ControlType.ScaleCornerTopLeft;
                                 case 1:
@@ -382,6 +382,7 @@ namespace SpotGrabber
 
 
         }
+
     }
 
 }
