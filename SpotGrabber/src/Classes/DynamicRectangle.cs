@@ -6,6 +6,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -146,19 +147,138 @@ namespace SpotGrabber
             Offset += pos;
         }
 
-        public void ScaleToPoint(Vector2 scaleToPoint)
+        public void ScaleToPoint(ControlType scaleType, Vector2 startPoint, Vector2 scaleToPoint)
         {
-            scaleToPoint.X = MyMathHelper.Clamp(scaleToPoint.X, -10f, 10f);
-            scaleToPoint.Y = MyMathHelper.Clamp(scaleToPoint.Y, -10f, 10f);
-
-            Vector2 scale = new Vector2(scaleToPoint.X / (-Rect.Left + Rect.Right), scaleToPoint.Y / (-Rect.Top + Rect.Bottom));
-
-            scale.X = MyMathHelper.Clamp(scale.X, -.1f, .1f);
-            scale.Y = MyMathHelper.Clamp(scale.Y, -.1f, .1f);
+            startPoint -= Offset;
 
             Rect.Rotate(-Rotation);
 
-            Rect.Scale(scale);
+            //var temp = scaleToPoint / 2;
+            //scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint/2, Rotation);
+
+            Vector2 scaleToPointDiv2 = scaleToPoint / 2;
+
+            List<Vector2> scaledRect;
+            
+
+            switch (scaleType)
+            {
+                case ControlType.ScaleCornerTopLeft:
+                    //top left sel
+                    scaleToPointDiv2 = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2;
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] + scaleToPointDiv2,
+                        Rect.Vertices[1] + new Vector2(-scaleToPointDiv2.X, scaleToPointDiv2.Y),
+                        Rect.Vertices[2] - scaleToPointDiv2,
+                        Rect.Vertices[3] + new Vector2(scaleToPointDiv2.X, -scaleToPointDiv2.Y) };
+                    Offset += scaleToPoint / 2;
+                    break;
+                case ControlType.ScaleCornerTopRight:
+                    //top right sel
+                    scaleToPointDiv2 = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2;
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] + new Vector2(-scaleToPointDiv2.X, scaleToPointDiv2.Y),
+                        Rect.Vertices[1] + scaleToPointDiv2,
+                        Rect.Vertices[2] + new Vector2(scaleToPointDiv2.X, -scaleToPointDiv2.Y),
+                        Rect.Vertices[3] - scaleToPointDiv2
+                    };
+                    Offset += scaleToPoint / 2;
+                    break;
+                default:
+                case ControlType.ScaleCornerBottomRight:
+                    // bottom right sel
+                    scaleToPointDiv2 = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2;
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] - scaleToPointDiv2,
+                        Rect.Vertices[1] + new Vector2(scaleToPointDiv2.X, -scaleToPointDiv2.Y),
+                        Rect.Vertices[2] + scaleToPointDiv2,
+                        Rect.Vertices[3] + new Vector2(-scaleToPointDiv2.X, scaleToPointDiv2.Y)
+                    };
+                    Offset += scaleToPoint / 2;
+                    break;
+                case ControlType.ScaleCornerBottomLeft:
+                    //bottom left sel
+                    scaleToPointDiv2 = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2;
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] + new Vector2(scaleToPointDiv2.X, -scaleToPointDiv2.Y),
+                        Rect.Vertices[1] - scaleToPointDiv2,
+                        Rect.Vertices[2] + new Vector2(-scaleToPointDiv2.X, scaleToPointDiv2.Y),
+                        Rect.Vertices[3] + scaleToPointDiv2
+                    };
+                    Offset += scaleToPoint / 2;
+                    break;
+                case ControlType.ScaleMidRight:
+                    //mid right
+                    scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation);
+                    scaleToPointDiv2 = new Vector2(scaleToPoint.X / 2, 0f);
+
+                    scaledRect = new List<Vector2> {
+                        default,
+                        Rect.Vertices[1] + new Vector2(scaleToPointDiv2.X, 0),
+                        Rect.Vertices[2] + new Vector2(scaleToPointDiv2.X, 0),
+                        default,
+                    };
+
+                    scaledRect[0] = -scaledRect[2];
+                    scaledRect[3] = -scaledRect[1];
+
+                    scaleToPoint.Y = 0;
+                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(1,-1);
+                    break;
+                case ControlType.ScaleMidLeft:
+                    scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation);
+                    scaleToPointDiv2 = new Vector2(scaleToPoint.X / 2, 0f);
+
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] + new Vector2(scaleToPointDiv2.X, 0),
+                        default,
+                        default,
+                        Rect.Vertices[3] + new Vector2(scaleToPointDiv2.X, 0),
+                    };
+
+                    scaledRect[2] = -scaledRect[0];
+                    scaledRect[1] = -scaledRect[3];
+
+                    scaleToPoint.Y = 0;
+                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(1, -1);
+                    break;
+                case ControlType.ScaleMidUp:
+                    scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation);
+                    scaleToPointDiv2 = new Vector2(0f, scaleToPoint.Y / 2);
+
+                    scaledRect = new List<Vector2> {
+                        Rect.Vertices[0] + new Vector2(0, scaleToPointDiv2.Y),
+                        Rect.Vertices[1] + new Vector2(0, scaleToPointDiv2.Y),
+                        default,
+                        default,
+                    };
+
+                    scaledRect[2] = -scaledRect[0];
+                    scaledRect[3] = -scaledRect[1];
+
+                    scaleToPoint.X = 0;
+                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(-1, 1);
+                    break;
+                case ControlType.ScaleMidDown:
+                    scaleToPoint = MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation);
+                    scaleToPointDiv2 = new Vector2(0f, scaleToPoint.Y / 2);
+
+                    scaledRect = new List<Vector2> {
+                        default,
+                        default,
+                        Rect.Vertices[2] + new Vector2(0, scaleToPointDiv2.Y),
+                        Rect.Vertices[3] + new Vector2(0, scaleToPointDiv2.Y)
+                    };
+
+                    scaledRect[0] = -scaledRect[2];
+                    scaledRect[1] = -scaledRect[3];
+
+                    scaleToPoint.X = 0;
+                    Offset += (MyMathHelper.RotateVector2ByAngle(scaleToPoint, Rotation) / 2) * new Vector2(-1, 1);
+                    break;
+            }
+
+            Rect = new Polygon(scaledRect);
 
             BuildRect();
 
@@ -210,18 +330,23 @@ namespace SpotGrabber
                             //top center, center right, center bottom, center left
                             switch (i)
                             {
-                                case 4:
-                                case 6:
-                                    return ControlType.ScaleMidY;
-                                case 5:
-                                case 7:
-                                    return ControlType.ScaleMidX;
+                                
                                 case 0:
-                                case 2:
-                                    return ControlType.ScaleCornerBS;
+                                    return ControlType.ScaleCornerTopLeft;
                                 case 1:
+                                    return ControlType.ScaleCornerTopRight;
+                                case 2:
+                                    return ControlType.ScaleCornerBottomRight;
                                 case 3:
-                                    return ControlType.ScaleCornerFS;
+                                    return ControlType.ScaleCornerBottomLeft;
+                                case 4:
+                                    return ControlType.ScaleMidUp;
+                                case 5:
+                                    return ControlType.ScaleMidRight;
+                                case 6:
+                                    return ControlType.ScaleMidDown;
+                                case 7:
+                                    return ControlType.ScaleMidLeft;
                             }
                         }
                     }

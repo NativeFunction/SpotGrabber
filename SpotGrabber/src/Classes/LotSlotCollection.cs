@@ -159,17 +159,15 @@ namespace SpotGrabber
                                 adjRect.SetPositionLocal(InputManager.GetMousePosVec() - currentSelectPoint);
                                 currentSelectPoint = InputManager.GetMousePosVec();
                                 break;
-                            case ControlType.ScaleCornerBS:
-                            case ControlType.ScaleCornerFS:
-                                adjRect.ScaleToPoint(InputManager.GetMousePosVec() - currentSelectPoint);
-                                currentSelectPoint = InputManager.GetMousePosVec();
-                                break;
-                            case ControlType.ScaleMidX:
-                                adjRect.ScaleToPoint(new Vector2((InputManager.GetMousePosVec() - currentSelectPoint).X, 0f));
-                                currentSelectPoint = InputManager.GetMousePosVec();
-                                break;
-                            case ControlType.ScaleMidY:
-                                adjRect.ScaleToPoint(new Vector2(0f, (InputManager.GetMousePosVec() - currentSelectPoint).Y));
+                            case ControlType.ScaleCornerTopLeft:
+                            case ControlType.ScaleCornerTopRight:
+                            case ControlType.ScaleCornerBottomRight:
+                            case ControlType.ScaleCornerBottomLeft:
+                            case ControlType.ScaleMidLeft:
+                            case ControlType.ScaleMidRight:
+                            case ControlType.ScaleMidUp:
+                            case ControlType.ScaleMidDown:
+                                adjRect.ScaleToPoint(isAdjRect, currentSelectPoint, InputManager.GetMousePosVec() - currentSelectPoint);
                                 currentSelectPoint = InputManager.GetMousePosVec();
                                 break;
 
@@ -242,16 +240,20 @@ namespace SpotGrabber
                         case ControlType.Rotate:
                             ActiveCursor = Cursors.Arrow;
                             break;
-                        case ControlType.ScaleCornerBS:
+                        case ControlType.ScaleCornerTopLeft:
+                        case ControlType.ScaleCornerBottomRight:
                             ActiveCursor = Cursors.SizeNWSE;
                             break;
-                        case ControlType.ScaleCornerFS:
+                        case ControlType.ScaleCornerTopRight:
+                        case ControlType.ScaleCornerBottomLeft:
                             ActiveCursor = Cursors.SizeNESW;
                             break;
-                        case ControlType.ScaleMidX:
+                        case ControlType.ScaleMidLeft:
+                        case ControlType.ScaleMidRight:
                             ActiveCursor = Cursors.SizeWE;
                             break;
-                        case ControlType.ScaleMidY:
+                        case ControlType.ScaleMidUp:
+                        case ControlType.ScaleMidDown:
                             ActiveCursor = Cursors.SizeNS;
                             break;
                         case ControlType.Position:
@@ -427,7 +429,7 @@ namespace SpotGrabber
                 float.TryParse(node.SelectSingleNode("Rotation")?.Attributes.GetNamedItem("value")?.InnerText, out float rotation);
 
 
-                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY), new Vector2(BottomLeftX, BottomLeftY), new Vector2(BottomRightX, BottomRightY) }), rotation, new Vector2(OffsetX, OffsetY));
+                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY), new Vector2(BottomRightX, BottomRightY), new Vector2(BottomLeftX, BottomLeftY) }), rotation, new Vector2(OffsetX, OffsetY));
 
                 Rects.Add(dr);
 

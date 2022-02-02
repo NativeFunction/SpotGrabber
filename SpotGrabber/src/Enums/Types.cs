@@ -5,10 +5,14 @@ namespace SpotGrabber
     {
         None,
         Line,
-        ScaleCornerBS,
-        ScaleCornerFS,
-        ScaleMidX,
-        ScaleMidY,
+        ScaleCornerTopLeft,
+        ScaleCornerTopRight,
+        ScaleCornerBottomRight,
+        ScaleCornerBottomLeft,
+        ScaleMidLeft,
+        ScaleMidRight,
+        ScaleMidUp,
+        ScaleMidDown,
         Rotate,
         Position
     }
