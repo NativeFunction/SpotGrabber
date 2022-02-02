@@ -350,7 +350,7 @@ namespace SpotGrabber
                             }
                         }
                     }
-                    return ControlType.Position;// ControlType.Rotate;
+                    return ControlType.Rotate;
 
                 }
                 return ControlType.None;

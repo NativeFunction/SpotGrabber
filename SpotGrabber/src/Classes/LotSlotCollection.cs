@@ -95,7 +95,7 @@ namespace SpotGrabber
                             adjRect = rect;
                             break;
                         }
-                        else if (rect.Contains(InputManager.GetMousePosVec()))//scale
+                        else if (rect.Contains(InputManager.GetMousePosVec()))//scale and rot
                         {
                             currentSelectPoint = InputManager.GetMousePosVec();
                             isAdjRect = rect.GetSelectAreaType(currentSelectPoint);
@@ -114,23 +114,23 @@ namespace SpotGrabber
                         currentLine.Point1 = InputManager.GetMousePosVec();
                     }
                 }
-                else if (InputManager.IsMouseButtonJustPressed(MouseInputButtons.RightButton))
-                {
-
-                    foreach (var rect in Rects)
-                    {
-                        if (rect.Contains(InputManager.GetMousePosVec()))//scale and rot
-                        {
-                            currentSelectPoint = InputManager.GetMousePosVec();
-                            isAdjRect = ControlType.Rotate;
-                            adjRect = rect;
-
-                            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
-                            initRot = (float)Math.Atan2(point.Y, point.X);
-                            break;
-                        }
-                    }
-                }
+                //else if (InputManager.IsMouseButtonJustPressed(MouseInputButtons.RightButton))
+                //{
+                //
+                //    foreach (var rect in Rects)
+                //    {
+                //        if (rect.Contains(InputManager.GetMousePosVec()))//scale and rot
+                //        {
+                //            currentSelectPoint = InputManager.GetMousePosVec();
+                //            isAdjRect = ControlType.Rotate;
+                //            adjRect = rect;
+                //
+                //            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                //            initRot = (float)Math.Atan2(point.Y, point.X);
+                //            break;
+                //        }
+                //    }
+                //}
                 else if (InputManager.IsMouseButtonJustReleased(MouseInputButtons.LeftButton))
                 {
                     //end line segment
@@ -144,10 +144,10 @@ namespace SpotGrabber
 
                     isAdjRect = ControlType.None;
                 }
-                else if (InputManager.IsMouseButtonJustReleased(MouseInputButtons.RightButton))
-                {
-                    isAdjRect = ControlType.None;
-                }
+                //else if (InputManager.IsMouseButtonJustReleased(MouseInputButtons.RightButton))
+                //{
+                //    isAdjRect = ControlType.None;
+                //}
                 else if (InputManager.IsMouseButtonPressed(MouseInputButtons.LeftButton))
                 {
                     //position
@@ -170,26 +170,36 @@ namespace SpotGrabber
                                 adjRect.ScaleToPoint(isAdjRect, currentSelectPoint, InputManager.GetMousePosVec() - currentSelectPoint);
                                 currentSelectPoint = InputManager.GetMousePosVec();
                                 break;
+                            case ControlType.Rotate:
+                                {
+                                    Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                                    float rot = (float)Math.Atan2(point.Y, point.X);
+
+                                    adjRect.Rotate(rot - initRot);
+
+                                    initRot = (float)Math.Atan2(point.Y, point.X);
+                                }
+                                break;
 
                         }
 
                     }
                 }
-                else if (InputManager.IsMouseButtonPressed(MouseInputButtons.RightButton))
-                {
-                    if (adjRect != null)
-                    {
-                        if (isAdjRect == ControlType.Rotate)
-                        {
-                            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
-                            float rot = (float)Math.Atan2(point.Y, point.X);
-
-                            adjRect.Rotate(rot - initRot);
-
-                            initRot = (float)Math.Atan2(point.Y, point.X);
-                        }
-                    }
-                }
+                //else if (InputManager.IsMouseButtonPressed(MouseInputButtons.RightButton))
+                //{
+                //    if (adjRect != null)
+                //    {
+                //        if (isAdjRect == ControlType.Rotate)
+                //        {
+                //            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                //            float rot = (float)Math.Atan2(point.Y, point.X);
+                //
+                //            adjRect.Rotate(rot - initRot);
+                //
+                //            initRot = (float)Math.Atan2(point.Y, point.X);
+                //        }
+                //    }
+                //}
                 else if (InputManager.IsMouseButtonJustReleased(MouseInputButtons.LeftButton))
                 {
                     if (isAdjRect == ControlType.Line)
@@ -224,7 +234,7 @@ namespace SpotGrabber
             if (currentLine.Point1 != new Vector2(-1, -1))
                 sb.DrawLine(currentLine.Point1, InputManager.GetMousePosVec(), Color.Black);
 
-            bool btn = !(InputManager.IsMouseButtonPressed(MouseInputButtons.LeftButton) || InputManager.IsMouseButtonPressed(MouseInputButtons.RightButton));
+            bool btn = !InputManager.IsMouseButtonPressed(MouseInputButtons.LeftButton);
 
             if (btn)
                 ActiveCursor = Cursors.Cross;
@@ -263,10 +273,11 @@ namespace SpotGrabber
                     }
                 }
 
-                if (rect.Contains(InputManager.GetMousePosVec()) && InputManager.IsMouseButtonJustPressed(MouseInputButtons.RightButton))
-                {
-                    ActiveCursor = Cursors.Arrow;
-                }
+                //for right click rot
+                //if (rect.Contains(InputManager.GetMousePosVec()) && InputManager.IsMouseButtonJustPressed(MouseInputButtons.RightButton))
+                //{
+                //    ActiveCursor = Cursors.Arrow;
+                //}
 
             }
 
