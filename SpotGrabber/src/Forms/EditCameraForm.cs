@@ -68,11 +68,13 @@ namespace SpotGrabber.src.Forms
 
             Cam.Template = Mono.lsc;
 
+            DialogResult = DialogResult.OK;
             Close();
         }
 
         private void CancelButtonClick(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 

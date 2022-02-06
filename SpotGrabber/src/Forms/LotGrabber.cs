@@ -151,9 +151,10 @@ namespace SpotGrabber
             CameraData cam = new CameraData(cams[contextMenuIndex]);
 
             EditCameraForm acf = new EditCameraForm(cam);
-            acf.ShowDialog();
-            
-            if (cam.IsValid())
+
+            var rects = cam.Template.CloneRects();
+
+            if (acf.ShowDialog() == DialogResult.OK && cam.IsValid())
             {
                 cams[contextMenuIndex] = cam;
                 XmlNode camNode = ccNode.SelectNodes("/CamCollection/Item")[contextMenuIndex];
@@ -162,6 +163,11 @@ namespace SpotGrabber
                 
                 camDoc.Save("Data/Cams.xml");
                 RefreshCamTable();
+            }
+            else
+            {
+                //cancel undo delete rect
+                cams[contextMenuIndex].Template.Rects = rects;
             }
         }
 

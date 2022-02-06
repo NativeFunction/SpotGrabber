@@ -15,14 +15,27 @@ using System.Xml;
 using ImageProcessor.Imaging.Filters;
 using ImageProcessor.Processors;
 using ImageProcessor.Imaging.Formats;
+using System.Windows.Navigation;
 
 namespace SpotGrabber
 {
 
+
     public class LotSlotCollection
     {
         Line currentLine = new Line();
-        public List<DynamicRectangle> Rects = new List<DynamicRectangle>(4);
+
+        private List<DynamicRectangle> _rects = new List<DynamicRectangle>();
+        public List<DynamicRectangle> Rects { 
+            get { return _rects; } 
+            set {
+                _rects = value;
+                foreach (var rect in Rects)
+                    rectSelectionOrder.AddLast(rect);
+            }
+        }
+        
+        LinkedList<DynamicRectangle> rectSelectionOrder = new LinkedList<DynamicRectangle>();
 
         Vector2 currentSelectPoint = default;
         ControlType isAdjRect = ControlType.None;
@@ -39,6 +52,8 @@ namespace SpotGrabber
 
         public LotSlotCollection(string xmlPath, Rectangle imageBounds, string lotName)
         {
+            
+
             CurrentImageBounds = imageBounds;
             InputXML(LoadXML(xmlPath));
             LotName = lotName;
@@ -51,14 +66,13 @@ namespace SpotGrabber
             LotName = lotName;
         }
 
-        public LotSlotCollection(string lotName, List<DynamicRectangle> _rects, int imageWidth, int imageHeight)
+        public LotSlotCollection(string lotName, List<DynamicRectangle> rects, int imageWidth, int imageHeight)
         {
             CurrentImageBounds.Height = imageHeight;
             CurrentImageBounds.Width = imageWidth;
-            Rects = _rects;
+            Rects = rects;
             LotName = lotName;
         }
-
 
         public void Update(Rectangle imageBounds)
         {
@@ -82,29 +96,35 @@ namespace SpotGrabber
             if (Utils.ApplicationIsActivated() && Utils.IsInBounds(InputManager.GetMousePos(), imageBounds))
             {
 
+                #region mouse buttons
                 if (InputManager.IsMouseButtonJustPressed(MouseInputButtons.LeftButton))
                 {
 
-                    foreach (var rect in Rects)
+                    for (var rectNode = rectSelectionOrder.First; rectNode != null; rectNode = rectNode.Next)
                     {
-                        var hh = InputManager.GetMousePosVec();
-                        if (rect.ContainsInner(InputManager.GetMousePosVec()))//position
+                        var rect = rectNode.Value;
+
+                        var mousePos = InputManager.GetMousePosVec();
+                        if (rect.ContainsInner(mousePos))//position
                         {
-                            currentSelectPoint = InputManager.GetMousePosVec();
+                            currentSelectPoint = mousePos;
                             isAdjRect = ControlType.Position;
                             adjRect = rect;
+                            SelectRect(rect);
                             break;
                         }
-                        else if (rect.Contains(InputManager.GetMousePosVec()))//scale and rot
+                        else if (rect.Contains(mousePos))//scale and rot
                         {
-                            currentSelectPoint = InputManager.GetMousePosVec();
+                            currentSelectPoint = mousePos;
                             isAdjRect = rect.GetSelectAreaType(currentSelectPoint);
                             adjRect = rect;
 
-                            Vector2 point = InputManager.GetMousePosVec() - adjRect.Offset;
+                            Vector2 point = mousePos - adjRect.Offset;
                             initRot = (float)Math.Atan2(point.Y, point.X);
+                            SelectRect(rect);
                             break;
                         }
+                        
 
                     }
 
@@ -208,6 +228,15 @@ namespace SpotGrabber
                         isAdjRect = ControlType.None;
                     }
                 }
+                #endregion
+
+                #region keys
+                if (InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.Delete))
+                {
+                    Rects.Remove(rectSelectionOrder.First());
+                    rectSelectionOrder.RemoveFirst();
+                }
+                #endregion
             }
         }
 
@@ -215,14 +244,52 @@ namespace SpotGrabber
         {
             currentLine = new Line();
             Rects.Clear();
+            rectSelectionOrder.Clear();
         }
+
+        public List<DynamicRectangle> CloneRects()
+        {
+            List<DynamicRectangle> o = new List<DynamicRectangle>(Rects.Count);
+
+            foreach(var rect in Rects)
+            {
+                rect.Rect.Rotate(-rect.Rotation);
+                var vert = rect.Rect.Vertices;
+
+                o.Add(new DynamicRectangle(new Polygon(new List<Vector2> {
+                new Vector2(vert[0].X, vert[0].Y),
+                new Vector2(vert[1].X, vert[1].Y),
+                new Vector2(vert[2].X, vert[2].Y),
+                new Vector2(vert[3].X, vert[3].Y)
+                }), rect.Rotation, rect.Offset));
+                rect.Rect.Rotate(rect.Rotation);
+            }
+
+            return o;
+        }
+
 
         public void AddLine(Line l)
         {
             var dr = new DynamicRectangle(l);
             if (dr.isLineValid())
             {
-                Rects.Add(dr);
+                AddRect(dr);
+            }
+        }
+
+        private void AddRect(DynamicRectangle dr)
+        {
+            rectSelectionOrder.AddLast(dr);
+            Rects.Add(dr);
+        }
+
+        public void SelectRect(DynamicRectangle dr)
+        {
+            if(dr != rectSelectionOrder.First.Value)
+            {
+                rectSelectionOrder.Remove(dr);
+                rectSelectionOrder.AddFirst(dr);
             }
         }
 
@@ -243,13 +310,15 @@ namespace SpotGrabber
             if (btn)
                 ActiveCursor = Cursors.Cross;
 
-            foreach (var rect in Rects)
+
+
+            for (var rectNode = rectSelectionOrder.First; rectNode != null; rectNode = rectNode.Next)
             {
-                rect.Draw(sb);
+                rectNode.Value.Draw(sb);
 
                 if (btn)
                 {
-                    switch (rect.GetSelectAreaType(InputManager.GetMousePosVec()))
+                    switch (rectNode.Value.GetSelectAreaType(InputManager.GetMousePosVec()))
                     {
                         case ControlType.Rotate:
                             ActiveCursor = Cursors.Arrow;
@@ -420,31 +489,33 @@ namespace SpotGrabber
 
 
 
-
+            bool valid = true;
             foreach (XmlNode node in drrNodes)
             {
                 XmlNode temp;
 
-                temp = node.SelectSingleNode("Offset");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float OffsetX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float OffsetY);
-                temp = node.SelectSingleNode("TopLeft");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float TopLeftX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float TopLeftY);
-                temp = node.SelectSingleNode("TopRight");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float TopRightX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float TopRightY);
-                temp = node.SelectSingleNode("BottomRight");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomRightX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomRightY);
-                temp = node.SelectSingleNode("BottomLeft");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomLeftX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomLeftY);
                 
 
+                temp = node.SelectSingleNode("Offset");
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float OffsetX);
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float OffsetY);
+                temp = node.SelectSingleNode("TopLeft");
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float TopLeftX);
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float TopLeftY);
+                temp = node.SelectSingleNode("TopRight");
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float TopRightX);
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float TopRightY);
+                temp = node.SelectSingleNode("BottomRight");
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomRightX);
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomRightY);
+                temp = node.SelectSingleNode("BottomLeft");
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomLeftX);
+                valid &= float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomLeftY);
 
-                float.TryParse(node.SelectSingleNode("Rotation")?.Attributes.GetNamedItem("value")?.InnerText, out float rotation);
+                valid &= float.TryParse(node.SelectSingleNode("Rotation")?.Attributes.GetNamedItem("value")?.InnerText, out float rotation);
 
+
+                
 
                 DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { 
                     new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY),
@@ -452,8 +523,13 @@ namespace SpotGrabber
                      }),
                     rotation, new Vector2(OffsetX, OffsetY));
 
-                Rects.Add(dr);
+                AddRect(dr);
 
+            }
+
+            if (!valid)
+            {
+                MessageBox.Show($"Issue reading cam rect data: {lscNode.ParentNode.SelectSingleNode("Name").InnerText}");
             }
 
 
