@@ -330,11 +330,11 @@ namespace SpotGrabber
                 element.SetAttribute("x", rect.Rect.Vertices[1].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[1].Y.ToString());
                 itemNode.AppendChild(element);
-                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomLeft", "");
+                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomRight", "");
                 element.SetAttribute("x", rect.Rect.Vertices[2].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[2].Y.ToString());
                 itemNode.AppendChild(element);
-                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomRight", "");
+                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomLeft", "");
                 element.SetAttribute("x", rect.Rect.Vertices[3].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[3].Y.ToString());
                 itemNode.AppendChild(element);
@@ -382,11 +382,11 @@ namespace SpotGrabber
                 element.SetAttribute("x", rect.Rect.Vertices[1].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[1].Y.ToString());
                 itemNode.AppendChild(element);
-                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomLeft", "");
+                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomRight", "");
                 element.SetAttribute("x", rect.Rect.Vertices[2].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[2].Y.ToString());
                 itemNode.AppendChild(element);
-                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomRight", "");
+                element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "BottomLeft", "");
                 element.SetAttribute("x", rect.Rect.Vertices[3].X.ToString());
                 element.SetAttribute("y", rect.Rect.Vertices[3].Y.ToString());
                 itemNode.AppendChild(element);
@@ -434,17 +434,23 @@ namespace SpotGrabber
                 temp = node.SelectSingleNode("TopRight");
                 float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float TopRightX);
                 float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float TopRightY);
-                temp = node.SelectSingleNode("BottomLeft");
-                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomLeftX);
-                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomLeftY);
                 temp = node.SelectSingleNode("BottomRight");
                 float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomRightX);
                 float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomRightY);
+                temp = node.SelectSingleNode("BottomLeft");
+                float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float BottomLeftX);
+                float.TryParse(temp?.Attributes.GetNamedItem("y")?.InnerText, out float BottomLeftY);
+                
+
 
                 float.TryParse(node.SelectSingleNode("Rotation")?.Attributes.GetNamedItem("value")?.InnerText, out float rotation);
 
 
-                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY), new Vector2(BottomLeftX, BottomLeftY), new Vector2(BottomRightX, BottomRightY) }), rotation, new Vector2(OffsetX, OffsetY));
+                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { 
+                    new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY),
+                    new Vector2(BottomRightX, BottomRightY), new Vector2(BottomLeftX, BottomLeftY),
+                     }),
+                    rotation, new Vector2(OffsetX, OffsetY));
 
                 Rects.Add(dr);
 
