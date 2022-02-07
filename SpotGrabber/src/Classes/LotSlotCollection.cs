@@ -27,15 +27,17 @@ namespace SpotGrabber
         Line currentLine = new Line();
 
         private List<DynamicRectangle> _rects = new List<DynamicRectangle>();
-        public List<DynamicRectangle> Rects { 
-            get { return _rects; } 
-            set {
+        public List<DynamicRectangle> Rects
+        {
+            get { return _rects; }
+            set
+            {
                 _rects = value;
                 foreach (var rect in Rects)
                     rectSelectionOrder.AddLast(rect);
             }
         }
-        
+
         LinkedList<DynamicRectangle> rectSelectionOrder = new LinkedList<DynamicRectangle>();
         DynamicRectangle copyRect;
 
@@ -54,7 +56,7 @@ namespace SpotGrabber
 
         public LotSlotCollection(string xmlPath, Rectangle imageBounds, string lotName)
         {
-            
+
 
             CurrentImageBounds = imageBounds;
             InputXML(LoadXML(xmlPath));
@@ -126,7 +128,7 @@ namespace SpotGrabber
                             SelectRect(rect);
                             break;
                         }
-                        
+
 
                     }
 
@@ -238,13 +240,13 @@ namespace SpotGrabber
                     Rects.Remove(rectSelectionOrder.First());
                     rectSelectionOrder.RemoveFirst();
                 }
-                else if(InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftControl) && InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.C))
+                else if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftControl) && InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.C))
                 {
                     copyRect = rectSelectionOrder.First();
                 }
                 else if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftControl) && InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.V))
                 {
-                    if(copyRect != null)
+                    if (copyRect != null)
                     {
                         var rect = copyRect.Clone();
                         rect.Offset -= new Vector2(50, 50);
@@ -258,7 +260,7 @@ namespace SpotGrabber
                         AddRect(rect, true);
                         copyRect = null;
                     }
-                    
+
                 }
                 #endregion
             }
@@ -275,7 +277,7 @@ namespace SpotGrabber
         {
             List<DynamicRectangle> o = new List<DynamicRectangle>(Rects.Count);
 
-            foreach(var rect in Rects)
+            foreach (var rect in Rects)
             {
                 o.Add(rect.Clone());
             }
@@ -295,16 +297,16 @@ namespace SpotGrabber
 
         private void AddRect(DynamicRectangle dr, bool first = false)
         {
-            if(first)
+            if (first)
                 rectSelectionOrder.AddFirst(dr);
-            else 
+            else
                 rectSelectionOrder.AddLast(dr);
             Rects.Add(dr);
         }
 
         public void SelectRect(DynamicRectangle dr)
         {
-            if(dr != rectSelectionOrder.First.Value)
+            if (dr != rectSelectionOrder.First.Value)
             {
                 rectSelectionOrder.Remove(dr);
                 rectSelectionOrder.AddFirst(dr);
@@ -332,7 +334,11 @@ namespace SpotGrabber
 
             for (var rectNode = rectSelectionOrder.First; rectNode != null; rectNode = rectNode.Next)
             {
-                rectNode.Value.Draw(sb);
+
+                if (rectNode == rectSelectionOrder.First)
+                    rectNode.Value.Draw(sb, Color.Silver);
+                else
+                    rectNode.Value.Draw(sb, Color.Black);
 
                 if (btn)
                 {
@@ -512,7 +518,7 @@ namespace SpotGrabber
             {
                 XmlNode temp;
 
-                
+
 
                 temp = node.SelectSingleNode("Offset");
                 valid &= float.TryParse(temp?.Attributes.GetNamedItem("x")?.InnerText, out float OffsetX);
@@ -533,9 +539,9 @@ namespace SpotGrabber
                 valid &= float.TryParse(node.SelectSingleNode("Rotation")?.Attributes.GetNamedItem("value")?.InnerText, out float rotation);
 
 
-                
 
-                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> { 
+
+                DynamicRectangle dr = new DynamicRectangle(new Polygon(new List<Vector2> {
                     new Vector2(TopLeftX, TopLeftY), new Vector2(TopRightX, TopRightY),
                     new Vector2(BottomRightX, BottomRightY), new Vector2(BottomLeftX, BottomLeftY),
                      }),

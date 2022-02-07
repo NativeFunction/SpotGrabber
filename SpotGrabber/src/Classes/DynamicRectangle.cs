@@ -1,4 +1,4 @@
-﻿#define DEBUGTEST
+﻿//#define DEBUGTEST
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -375,10 +375,10 @@ namespace SpotGrabber
                 return ControlType.Position;
         }
 
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Color c)
         {
 
-            sb.DrawPolygon(Offset, Rect, Color.Black);
+            sb.DrawPolygon(Offset, Rect, c);
 
 #if DEBUGTEST
             Polygon rect = Rect.TransformedCopy(Vector2.Zero, 0, new Vector2(-.2f, -.2f));
