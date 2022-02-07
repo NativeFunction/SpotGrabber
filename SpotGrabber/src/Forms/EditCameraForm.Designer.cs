@@ -29,7 +29,6 @@ namespace SpotGrabber.src.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.Mono = new SpotGrabber.MonoDraw();
             this.ReloadCameraButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.UpdateButton = new System.Windows.Forms.Button();
@@ -43,23 +42,12 @@ namespace SpotGrabber.src.Forms
             this.PostalCodeTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.Mono = new SpotGrabber.MonoDraw();
             this.SuspendLayout();
-            // 
-            // Mono
-            // 
-            this.Mono.AllowDrop = true;
-            this.Mono.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Mono.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.Mono.Location = new System.Drawing.Point(12, 12);
-            this.Mono.MouseHoverUpdatesOnly = false;
-            this.Mono.Name = "Mono";
-            this.Mono.Size = new System.Drawing.Size(960, 540);
-            this.Mono.TabIndex = 18;
-            this.Mono.Text = "Mono";
             // 
             // ReloadCameraButton
             // 
-            this.ReloadCameraButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReloadCameraButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ReloadCameraButton.Location = new System.Drawing.Point(12, 641);
             this.ReloadCameraButton.Name = "ReloadCameraButton";
             this.ReloadCameraButton.Size = new System.Drawing.Size(118, 31);
@@ -92,6 +80,7 @@ namespace SpotGrabber.src.Forms
             // 
             // LotSizeComboBox
             // 
+            this.LotSizeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LotSizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LotSizeComboBox.FormattingEnabled = true;
             this.LotSizeComboBox.Items.AddRange(new object[] {
@@ -105,6 +94,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(408, 576);
             this.label7.Name = "label7";
@@ -114,6 +104,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(214, 576);
             this.label6.Name = "label6";
@@ -123,6 +114,7 @@ namespace SpotGrabber.src.Forms
             // 
             // CameraAngleTextBox
             // 
+            this.CameraAngleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CameraAngleTextBox.Location = new System.Drawing.Point(217, 596);
             this.CameraAngleTextBox.Name = "CameraAngleTextBox";
             this.CameraAngleTextBox.Size = new System.Drawing.Size(173, 22);
@@ -130,6 +122,7 @@ namespace SpotGrabber.src.Forms
             // 
             // VideoQualityComboBox
             // 
+            this.VideoQualityComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.VideoQualityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.VideoQualityComboBox.FormattingEnabled = true;
             this.VideoQualityComboBox.Items.AddRange(new object[] {
@@ -143,6 +136,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(796, 576);
             this.label5.Name = "label5";
@@ -152,6 +146,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(604, 576);
             this.label4.Name = "label4";
@@ -161,6 +156,7 @@ namespace SpotGrabber.src.Forms
             // 
             // PostalCodeTextBox
             // 
+            this.PostalCodeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.PostalCodeTextBox.Location = new System.Drawing.Point(607, 596);
             this.PostalCodeTextBox.Name = "PostalCodeTextBox";
             this.PostalCodeTextBox.Size = new System.Drawing.Size(173, 22);
@@ -168,6 +164,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 576);
             this.label1.Name = "label1";
@@ -177,10 +174,26 @@ namespace SpotGrabber.src.Forms
             // 
             // NameTextBox
             // 
+            this.NameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.NameTextBox.Location = new System.Drawing.Point(15, 596);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(173, 22);
             this.NameTextBox.TabIndex = 19;
+            // 
+            // Mono
+            // 
+            this.Mono.AllowDrop = true;
+            this.Mono.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Mono.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Mono.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.Mono.Location = new System.Drawing.Point(12, 12);
+            this.Mono.MouseHoverUpdatesOnly = false;
+            this.Mono.Name = "Mono";
+            this.Mono.Size = new System.Drawing.Size(960, 540);
+            this.Mono.TabIndex = 18;
+            this.Mono.Text = "Mono";
             // 
             // EditCameraForm
             // 
@@ -201,6 +214,7 @@ namespace SpotGrabber.src.Forms
             this.Controls.Add(this.label1);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.Mono);
+            this.MinimumSize = new System.Drawing.Size(1002, 749);
             this.Name = "EditCameraForm";
             this.Text = "Edit Cam";
             this.Load += new System.EventHandler(this.EditCamFormLoad);
