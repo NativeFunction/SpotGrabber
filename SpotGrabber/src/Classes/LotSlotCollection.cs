@@ -331,43 +331,50 @@ namespace SpotGrabber
                 ActiveCursor = Cursors.Cross;
 
 
-
+            bool hasSelectedCursor = false;
             for (var rectNode = rectSelectionOrder.First; rectNode != null; rectNode = rectNode.Next)
             {
 
                 if (rectNode == rectSelectionOrder.First)
-                    rectNode.Value.Draw(sb, Color.Silver);
+                    rectNode.Value.Draw(sb, Color.White);
                 else
                     rectNode.Value.Draw(sb, Color.Black);
 
-                if (btn)
+                if (btn && !hasSelectedCursor)
                 {
                     switch (rectNode.Value.GetSelectAreaType(InputManager.GetMousePosVec()))
                     {
                         case ControlType.Rotate:
                             ActiveCursor = Cursors.Arrow;
+                            hasSelectedCursor = true;
                             break;
                         case ControlType.ScaleCornerTopLeft:
                         case ControlType.ScaleCornerBottomRight:
                             ActiveCursor = Cursors.SizeNWSE;
+                            hasSelectedCursor = true;
                             break;
                         case ControlType.ScaleCornerTopRight:
                         case ControlType.ScaleCornerBottomLeft:
                             ActiveCursor = Cursors.SizeNESW;
+                            hasSelectedCursor = true;
                             break;
                         case ControlType.ScaleMidLeft:
                         case ControlType.ScaleMidRight:
                             ActiveCursor = Cursors.SizeWE;
+                            hasSelectedCursor = true;
                             break;
                         case ControlType.ScaleMidUp:
                         case ControlType.ScaleMidDown:
                             ActiveCursor = Cursors.SizeNS;
+                            hasSelectedCursor = true;
                             break;
                         case ControlType.Position:
                             ActiveCursor = Cursors.SizeAll;
+                            hasSelectedCursor = true;
                             break;
 
                     }
+
                 }
 
                 //for right click rot
