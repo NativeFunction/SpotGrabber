@@ -38,6 +38,22 @@ namespace SpotGrabber
             BuildRect();
         }
 
+        public DynamicRectangle Clone()
+        {
+            Rect.Rotate(-Rotation);
+            var vert = Rect.Vertices;
+
+            var dr = new DynamicRectangle(new Polygon(new List<Vector2> {
+                new Vector2(vert[0].X, vert[0].Y),
+                new Vector2(vert[1].X, vert[1].Y),
+                new Vector2(vert[2].X, vert[2].Y),
+                new Vector2(vert[3].X, vert[3].Y)
+                }), Rotation, Offset);
+
+            Rect.Rotate(Rotation);
+            return dr;
+        }
+
         void SetLine(Line line)
         {
             Line = line;

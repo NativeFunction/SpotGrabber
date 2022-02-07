@@ -16,6 +16,7 @@ using ImageProcessor.Imaging.Filters;
 using ImageProcessor.Processors;
 using ImageProcessor.Imaging.Formats;
 using System.Windows.Navigation;
+using SharpDX.MediaFoundation;
 
 namespace SpotGrabber
 {
@@ -36,6 +37,7 @@ namespace SpotGrabber
         }
         
         LinkedList<DynamicRectangle> rectSelectionOrder = new LinkedList<DynamicRectangle>();
+        DynamicRectangle copyRect;
 
         Vector2 currentSelectPoint = default;
         ControlType isAdjRect = ControlType.None;
@@ -236,6 +238,28 @@ namespace SpotGrabber
                     Rects.Remove(rectSelectionOrder.First());
                     rectSelectionOrder.RemoveFirst();
                 }
+                else if(InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftControl) && InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.C))
+                {
+                    copyRect = rectSelectionOrder.First();
+                }
+                else if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.LeftControl) && InputManager.IsKeyJustPressed(Microsoft.Xna.Framework.Input.Keys.V))
+                {
+                    if(copyRect != null)
+                    {
+                        var rect = copyRect.Clone();
+                        rect.Offset -= new Vector2(50, 50);
+
+                        if (rect.Offset.X < 0)
+                            rect.Offset.X = 0;
+
+                        if (rect.Offset.Y < 0)
+                            rect.Offset.Y = 0;
+
+                        AddRect(rect, true);
+                        copyRect = null;
+                    }
+                    
+                }
                 #endregion
             }
         }
@@ -253,16 +277,7 @@ namespace SpotGrabber
 
             foreach(var rect in Rects)
             {
-                rect.Rect.Rotate(-rect.Rotation);
-                var vert = rect.Rect.Vertices;
-
-                o.Add(new DynamicRectangle(new Polygon(new List<Vector2> {
-                new Vector2(vert[0].X, vert[0].Y),
-                new Vector2(vert[1].X, vert[1].Y),
-                new Vector2(vert[2].X, vert[2].Y),
-                new Vector2(vert[3].X, vert[3].Y)
-                }), rect.Rotation, rect.Offset));
-                rect.Rect.Rotate(rect.Rotation);
+                o.Add(rect.Clone());
             }
 
             return o;
@@ -278,9 +293,12 @@ namespace SpotGrabber
             }
         }
 
-        private void AddRect(DynamicRectangle dr)
+        private void AddRect(DynamicRectangle dr, bool first = false)
         {
-            rectSelectionOrder.AddLast(dr);
+            if(first)
+                rectSelectionOrder.AddFirst(dr);
+            else 
+                rectSelectionOrder.AddLast(dr);
             Rects.Add(dr);
         }
 
