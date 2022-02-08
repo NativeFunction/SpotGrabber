@@ -21,7 +21,6 @@ namespace SpotGrabber
         public string Name = "";
         public CameraManufacturer Manufacturer = CameraManufacturer.None;
         public string Url = "";
-        public string PostalCode = "";
         public CameraQuality Quality = CameraQuality.None;
         public int Angle = 0;
         public LotSize LotSize = LotSize.None;
@@ -35,7 +34,6 @@ namespace SpotGrabber
             Name = cam.Name;
             Manufacturer = cam.Manufacturer;
             Url = cam.Url;
-            PostalCode = cam.PostalCode;
             Quality = cam.Quality;
             Angle = cam.Angle;
             LotSize = cam.LotSize;
@@ -55,8 +53,6 @@ namespace SpotGrabber
             Enum.TryParse(temp?.InnerText, out Manufacturer);
             temp = camNode.SelectSingleNode("Url");
             Url = temp?.Attributes.GetNamedItem("value")?.InnerText;
-            temp = camNode.SelectSingleNode("PostalCode");
-            PostalCode = temp?.Attributes.GetNamedItem("value")?.InnerText;
             temp = camNode.SelectSingleNode("Quality");
             if (int.TryParse(temp?.Attributes.GetNamedItem("value")?.InnerText, out tempInt))
                 Quality = (CameraQuality)tempInt;
@@ -74,7 +70,7 @@ namespace SpotGrabber
 
         public bool IsValid()
         {
-            return Name != "" && Manufacturer != CameraManufacturer.None && Url != "" && PostalCode != ""
+            return Name != "" && Manufacturer != CameraManufacturer.None && Url != ""
                 && Quality != CameraQuality.None && Angle >= 0 && Angle <= 360 && LotSize != LotSize.None && Template.HasData();
         }
 
@@ -95,10 +91,6 @@ namespace SpotGrabber
 
             element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "Url", "");
             element.SetAttribute("value", Url);
-            itemNode.AppendChild(element);
-
-            element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "PostalCode", "");
-            element.SetAttribute("value", PostalCode);
             itemNode.AppendChild(element);
 
             element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "Quality", "");
@@ -135,8 +127,6 @@ namespace SpotGrabber
             //element = (XmlElement)baseNode.SelectSingleNode("Url");
             //element.SetAttribute("value", Url);
 
-            element = (XmlElement)baseNode.SelectSingleNode("PostalCode");
-            element.SetAttribute("value", PostalCode);
 
             element = (XmlElement)baseNode.SelectSingleNode("Quality");
             element.SetAttribute("value", ((int)Quality).ToString());
@@ -193,8 +183,10 @@ namespace SpotGrabber
                 {
                     switch (man)
                     {
+                        case CameraManufacturer.PanasonicHD:
                         case CameraManufacturer.ChannelVision:
                         case CameraManufacturer.Axis:
+                        case CameraManufacturer.AxisMkII:
                             MJPEGStream stream = new MJPEGStream(url);
                             NewFrameEventHandler l = null;
 

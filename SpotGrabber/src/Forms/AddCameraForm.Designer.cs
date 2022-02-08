@@ -35,8 +35,6 @@ namespace SpotGrabber
             this.CameraURLTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ManufacturerComboBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.PostalCodeTextBox = new System.Windows.Forms.TextBox();
             this.VideoQualityComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -111,24 +109,6 @@ namespace SpotGrabber
             this.ManufacturerComboBox.Name = "ManufacturerComboBox";
             this.ManufacturerComboBox.Size = new System.Drawing.Size(173, 24);
             this.ManufacturerComboBox.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(294, 648);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 17);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Postal Code:";
-            // 
-            // PostalCodeTextBox
-            // 
-            this.PostalCodeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.PostalCodeTextBox.Location = new System.Drawing.Point(297, 668);
-            this.PostalCodeTextBox.Name = "PostalCodeTextBox";
-            this.PostalCodeTextBox.Size = new System.Drawing.Size(173, 22);
-            this.PostalCodeTextBox.TabIndex = 7;
             // 
             // VideoQualityComboBox
             // 
@@ -261,8 +241,6 @@ namespace SpotGrabber
             this.Controls.Add(this.CameraAngleTextBox);
             this.Controls.Add(this.VideoQualityComboBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.PostalCodeTextBox);
             this.Controls.Add(this.ManufacturerComboBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -285,8 +263,6 @@ namespace SpotGrabber
         private System.Windows.Forms.TextBox CameraURLTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox ManufacturerComboBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox PostalCodeTextBox;
         private System.Windows.Forms.ComboBox VideoQualityComboBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
@@ -294,7 +270,7 @@ namespace SpotGrabber
         private System.Windows.Forms.ComboBox LotSizeComboBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button AddButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
         private MonoDraw Mono;
         private System.Windows.Forms.Button LoadCameraButton;
     }

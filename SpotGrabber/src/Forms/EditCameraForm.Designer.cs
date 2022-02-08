@@ -38,8 +38,6 @@ namespace SpotGrabber.src.Forms
             this.CameraAngleTextBox = new System.Windows.Forms.TextBox();
             this.VideoQualityComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.PostalCodeTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.Mono = new SpotGrabber.MonoDraw();
@@ -144,24 +142,6 @@ namespace SpotGrabber.src.Forms
             this.label5.TabIndex = 27;
             this.label5.Text = "Video Quality:";
             // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(604, 576);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 17);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Postal Code:";
-            // 
-            // PostalCodeTextBox
-            // 
-            this.PostalCodeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.PostalCodeTextBox.Location = new System.Drawing.Point(607, 596);
-            this.PostalCodeTextBox.Name = "PostalCodeTextBox";
-            this.PostalCodeTextBox.Size = new System.Drawing.Size(173, 22);
-            this.PostalCodeTextBox.TabIndex = 25;
-            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -209,8 +189,6 @@ namespace SpotGrabber.src.Forms
             this.Controls.Add(this.CameraAngleTextBox);
             this.Controls.Add(this.VideoQualityComboBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.PostalCodeTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.Mono);
@@ -227,7 +205,7 @@ namespace SpotGrabber.src.Forms
 
         private MonoDraw Mono;
         private System.Windows.Forms.Button ReloadCameraButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Button UpdateButton;
         private System.Windows.Forms.ComboBox LotSizeComboBox;
         private System.Windows.Forms.Label label7;
@@ -235,8 +213,6 @@ namespace SpotGrabber.src.Forms
         private System.Windows.Forms.TextBox CameraAngleTextBox;
         private System.Windows.Forms.ComboBox VideoQualityComboBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox PostalCodeTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox NameTextBox;
     }

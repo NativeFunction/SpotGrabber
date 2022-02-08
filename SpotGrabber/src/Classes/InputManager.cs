@@ -45,7 +45,6 @@ namespace SpotGrabber
         static Point mousePosition;
         static Vector2 mousePositionVec;
         static Vector2 mousePositionDelta;
-        static float cursorSpeed;
         static int newScrollWheelPress;
 
         static KeyEvent keyEvent;

@@ -22,7 +22,6 @@ namespace SpotGrabber.src.Forms
 
             CameraAngleTextBox.Text = Cam.Angle.ToString();
             NameTextBox.Text = Cam.Name;
-            PostalCodeTextBox.Text = Cam.PostalCode;
 
             LotSizeComboBox.SelectedIndex = (int)Cam.LotSize;
             VideoQualityComboBox.SelectedIndex = (int)Cam.Quality;
@@ -58,7 +57,6 @@ namespace SpotGrabber.src.Forms
         {
 
             Cam.Name = NameTextBox.Text;
-            Cam.PostalCode = PostalCodeTextBox.Text;
 
             if (Enum.TryParse(VideoQualityComboBox.Text, out CameraQuality cq))
                 Cam.Quality = cq;

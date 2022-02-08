@@ -45,32 +45,72 @@ namespace SpotGrabber
 
         private void AddButtonClick(object sender, EventArgs e)
         {
-            Cam.Name = NameTextBox.Text;
 
-            if (Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer cm))
+            if (NameTextBox.Text != "")
+                Cam.Name = NameTextBox.Text;
+            else
+            {
+                MessageBox.Show("Camera name is not set", "Error");
+                return;
+            }
+
+
+
+            if (ManufacturerComboBox.Text != "" && Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer cm))
                 Cam.Manufacturer = cm;
+            else
+            {
+                MessageBox.Show("Camera manufacturer is not set", "Error");
+                return;
+            }
 
-            Cam.Url = CameraURLTextBox.Text;
-            Cam.PostalCode = PostalCodeTextBox.Text;
 
-            if (Enum.TryParse(VideoQualityComboBox.Text, out CameraQuality cq))
+            if (CameraURLTextBox.Text != "")
+                Cam.Url = CameraURLTextBox.Text;
+            else
+            {
+                MessageBox.Show("Camera url is not set", "Error");
+                return;
+            }
+
+
+
+            if (VideoQualityComboBox.Text != "" && Enum.TryParse(VideoQualityComboBox.Text, out CameraQuality cq))
                 Cam.Quality = cq;
+            else
+            {
+                MessageBox.Show("Camera quality is not set", "Error");
+                return;
+            }
 
-            if (int.TryParse(CameraAngleTextBox.Text, out int ang))
+            if (CameraAngleTextBox.Text != "" && int.TryParse(CameraAngleTextBox.Text, out int ang))
             {
                 ang %= 360;
                 if (ang < 0) ang += 360;
 
                 Cam.Angle = ang;
             }
+            else
+            {
+                MessageBox.Show("Camera angle is not set", "Error");
+                return;
+            }
 
-            if (Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
+            if (LotSizeComboBox.Text != "" && Enum.TryParse(LotSizeComboBox.Text, out LotSize ls))
                 Cam.LotSize = ls;
+            else
+            {
+                MessageBox.Show("Camera lot size is not set", "Error");
+                return;
+            }
 
-            //no need to update since we did not save capture
-            //Cam.UpdateLastCaptureDate();
-
-            Cam.Template = Mono.lsc;
+            if(Mono.IsBackgroundLoaded() && Mono.lsc.Rects.Count != 0)
+                Cam.Template = Mono.lsc;
+            else
+            {
+                MessageBox.Show("Camera template is not set", "Error");
+                return;
+            }
 
             Close();
 
@@ -82,7 +122,7 @@ namespace SpotGrabber
             Close();
         }
 
-        
+
 
         private void LoadCameraButtonClick(object sender, EventArgs e)
         {

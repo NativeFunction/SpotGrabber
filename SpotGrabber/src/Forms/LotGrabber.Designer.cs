@@ -37,7 +37,6 @@ namespace SpotGrabber
             this.EditCamContextMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ManufacturerColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PostalCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.QualityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AngleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LotSizeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,7 +69,6 @@ namespace SpotGrabber
             this.CamTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NameColumn,
             this.ManufacturerColumn,
-            this.PostalCodeColumn,
             this.QualityColumn,
             this.AngleColumn,
             this.LotSizeColumn,
@@ -131,15 +129,6 @@ namespace SpotGrabber
             this.ManufacturerColumn.ReadOnly = true;
             this.ManufacturerColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ManufacturerColumn.Width = 132;
-            // 
-            // PostalCodeColumn
-            // 
-            this.PostalCodeColumn.HeaderText = "Postal Code";
-            this.PostalCodeColumn.MinimumWidth = 6;
-            this.PostalCodeColumn.Name = "PostalCodeColumn";
-            this.PostalCodeColumn.ReadOnly = true;
-            this.PostalCodeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PostalCodeColumn.Width = 132;
             // 
             // QualityColumn
             // 
@@ -205,7 +194,6 @@ namespace SpotGrabber
         private System.Windows.Forms.ToolStripMenuItem EditCamContextMenu;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ManufacturerColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PostalCodeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn QualityColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn AngleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LotSizeColumn;

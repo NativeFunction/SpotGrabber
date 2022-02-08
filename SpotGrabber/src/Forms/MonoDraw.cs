@@ -117,5 +117,10 @@ namespace SpotGrabber
                     lsc = collection;
             }
         }
+
+        public bool IsBackgroundLoaded()
+        {
+            return Image != null;
+        }
     }
 }
