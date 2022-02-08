@@ -180,12 +180,12 @@ namespace SpotGrabber
 
         }
 
-        public void DownloadCamImage(Action<System.Drawing.Bitmap, int> func, int index = 0)
+        public bool DownloadCamImage(Action<System.Drawing.Bitmap, int> func, int index = 0)
         {
-            DownloadCamImage(Url, Manufacturer, func, index);
+            return DownloadCamImage(Url, Manufacturer, func, index);
         }
 
-        static public void DownloadCamImage(string url, CameraManufacturer man, Action<System.Drawing.Bitmap, int> func, int index = 0)
+        static public bool DownloadCamImage(string url, CameraManufacturer man, Action<System.Drawing.Bitmap, int> func, int index = 0)
         {
             if (url != "" && man != CameraManufacturer.None)
             {
@@ -209,10 +209,11 @@ namespace SpotGrabber
                             stream.NewFrame += l;
 
                             stream.Start();
-                            break;
+                            return true;
                     }
                 }
             }
+            return false;
         }
 
         public void UpdateLastCaptureDate()

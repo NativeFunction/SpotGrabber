@@ -90,10 +90,13 @@ namespace SpotGrabber
             {
                 if (Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer man))
                 {
-                    CameraData.DownloadCamImage(CameraURLTextBox.Text, man, (Bitmap bm, int i) =>
+                    bool res = CameraData.DownloadCamImage(CameraURLTextBox.Text, man, (Bitmap bm, int i) =>
                     {
                         Mono.LoadBackgroundImage(bm, NameTextBox.Text);
                     });
+
+                    if (!res)
+                        MessageBox.Show("Failed to connect to url", "Error");
                 }
             }
         }

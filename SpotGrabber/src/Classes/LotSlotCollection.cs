@@ -560,7 +560,7 @@ namespace SpotGrabber
 
             if (!valid)
             {
-                MessageBox.Show($"Issue reading cam rect data: {lscNode.ParentNode.SelectSingleNode("Name").InnerText}");
+                MessageBox.Show($"Issue reading cam rect data: {lscNode.ParentNode.SelectSingleNode("Name").InnerText}", "Error");
             }
 
 

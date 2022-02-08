@@ -26,20 +26,32 @@ namespace SpotGrabber.src.Forms
 
             LotSizeComboBox.SelectedIndex = (int)Cam.LotSize;
             VideoQualityComboBox.SelectedIndex = (int)Cam.Quality;
+
+            Opacity = 0;
         }
 
 
         private void EditCamFormLoad(object sender, EventArgs e)
         {
-            LoadCamera();
+            if (!LoadCamera())
+            {
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            else
+                Opacity = 100;
         }
 
-        void LoadCamera()
+        bool LoadCamera()
         {
-            Cam.DownloadCamImage((Bitmap bm, int i) =>
+            bool res = Cam.DownloadCamImage((Bitmap bm, int i) =>
             {
                 Mono.LoadBackgroundImage(bm, Cam.Name, Cam.Template);
             });
+
+            if (!res)
+                MessageBox.Show("Could not connect to camera", "Error");
+            return res;
         }
 
         private void UpdateButtonClick(object sender, EventArgs e)
