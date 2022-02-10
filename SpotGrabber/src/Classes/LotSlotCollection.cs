@@ -606,7 +606,6 @@ namespace SpotGrabber
 
                     Rects[i].Rect.Rotate(Rects[i].Rotation);
 
-
                     int snapshotWidth = (int)(Math.Ceiling(-Rects[i].Rect.Left + Rects[i].Rect.Right) * px);
                     int snapshotHeight = (int)(Math.Ceiling(-Rects[i].Rect.Top + Rects[i].Rect.Bottom) * py);
 
@@ -614,20 +613,14 @@ namespace SpotGrabber
                     var bmRect = new System.Drawing.Rectangle((int)(Rects[i].Offset.X * px - snapshotWidth / 2),
                     (int)(Rects[i].Offset.Y * py - snapshotHeight / 2), snapshotWidth, snapshotHeight);
 
-
-
                     using (System.Drawing.Bitmap b = new System.Drawing.Bitmap(snapshotWidth, snapshotHeight))
                     {
-
-                        //image.Clone(bmRect, image.PixelFormat);
                         using (System.Drawing.Graphics gph = System.Drawing.Graphics.FromImage(b))
                         {
                             gph.DrawImage(image, new System.Drawing.Rectangle(0, 0, snapshotWidth, snapshotHeight),
                                 bmRect,
                                 System.Drawing.GraphicsUnit.Pixel);
                         }
-
-                        //b.Save(@"C:\Users\Rocko\Desktop\" + i.ToString() + ".jpg",System.Drawing.Imaging.ImageFormat.Jpeg);
 
                         ImageProcessor.ImageFactory l = new ImageProcessor.ImageFactory();
 
@@ -636,7 +629,6 @@ namespace SpotGrabber
                         l.Resolution(snapshotWidth, snapshotHeight);
 
                         l.Rotate(-MyMathHelper.RadToDeg(Rects[i].Rotation));
-
 
                         l.Crop(new System.Drawing.Rectangle(MyMathHelper.Clamp((l.Image.Width - rectWidthNoRot) / 2, 0, l.Image.Width), MyMathHelper.Clamp((l.Image.Height - rectHeightNoRot) / 2, 0, l.Image.Height), rectWidthNoRot, rectHeightNoRot));
                         l.Save(path + $"_spot" + i.ToString() + ".jpg");

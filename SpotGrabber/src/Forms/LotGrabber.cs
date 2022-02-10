@@ -56,7 +56,7 @@ namespace SpotGrabber
                 {
                     CameraData cam = new CameraData(node);
                     cams.Add(cam);
-                    CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate);
+                    CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate, cam.Template.Rects.Count.ToString());
 
                 }
             }
@@ -90,7 +90,7 @@ namespace SpotGrabber
                 cams.Add(cam);
             
             
-                CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate);
+                CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate, cam.Template.Rects.Count.ToString());
             
             }
 
@@ -187,6 +187,7 @@ namespace SpotGrabber
                 CamTable.Rows[i].Cells[3].Value = $"≈ {cams[i].Angle}°";
                 CamTable.Rows[i].Cells[4].Value = Enum.GetName(typeof(LotSize), cams[i].LotSize);
                 CamTable.Rows[i].Cells[5].Value = cams[i].LastCaptureDate;
+                CamTable.Rows[i].Cells[6].Value = cams[i].Template.Rects.Count.ToString();
 
             }
 

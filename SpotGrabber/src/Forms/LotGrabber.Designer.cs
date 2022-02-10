@@ -41,6 +41,7 @@ namespace SpotGrabber
             this.AngleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LotSizeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastCaptureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SpotCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.CamTable)).BeginInit();
             this.CamTableContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -72,7 +73,8 @@ namespace SpotGrabber
             this.QualityColumn,
             this.AngleColumn,
             this.LotSizeColumn,
-            this.LastCaptureColumn});
+            this.LastCaptureColumn,
+            this.SpotCount});
             this.CamTable.GridColor = System.Drawing.SystemColors.Control;
             this.CamTable.Location = new System.Drawing.Point(12, 12);
             this.CamTable.MultiSelect = false;
@@ -166,6 +168,15 @@ namespace SpotGrabber
             this.LastCaptureColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.LastCaptureColumn.Width = 132;
             // 
+            // SpotCount
+            // 
+            this.SpotCount.HeaderText = "Spot Count";
+            this.SpotCount.MinimumWidth = 6;
+            this.SpotCount.Name = "SpotCount";
+            this.SpotCount.ReadOnly = true;
+            this.SpotCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SpotCount.Width = 125;
+            // 
             // LotGrabberForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -198,5 +209,6 @@ namespace SpotGrabber
         private System.Windows.Forms.DataGridViewTextBoxColumn AngleColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LotSizeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastCaptureColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SpotCount;
     }
 }
