@@ -12,6 +12,7 @@ using System.Threading;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Diagnostics;
 
 namespace SpotGrabber
 {
@@ -27,6 +28,41 @@ namespace SpotGrabber
         private void ClearRectsButtonClick(object sender, EventArgs e)
         {
             Mono.lsc?.Clear();
+
+            //compare testing
+            //string pBase = @"C:\Users\Rocko\Documents\Visual Studio 2019\Projects\SpotGrabber\SpotGrabber\bin\Debug\Data\Spots\";
+            //
+            //var i = Codeuctivity.ImageSharpCompare.CalcDiff(
+            //    pBase + "Helena, MT_180222-1416_spot0.jpg",
+            //    pBase + "Helena, MT_180222-1537_spot0.jpg");
+            //
+            //Debug.WriteLine($"{i.AbsoluteError}, {i.MeanError}, {i.PixelErrorCount}, {i.PixelErrorPercentage}");
+            //
+            //i = Codeuctivity.ImageSharpCompare.CalcDiff(
+            //    pBase + "Helena, MT_180222-1416_spot1.jpg",
+            //    pBase + "Helena, MT_180222-1537_spot1.jpg");
+            //
+            //Debug.WriteLine($"{i.AbsoluteError}, {i.MeanError}, {i.PixelErrorCount}, {i.PixelErrorPercentage}");
+            //
+            //
+            //i = Codeuctivity.ImageSharpCompare.CalcDiff(
+            //    pBase + "Helena, MT_180222-1416_spot2.jpg",
+            //    pBase + "Helena, MT_180222-1537_spot2.jpg");
+            //
+            //Debug.WriteLine($"{i.AbsoluteError}, {i.MeanError}, {i.PixelErrorCount}, {i.PixelErrorPercentage}");
+            //
+            //
+            //for (int j = 0; j < 100; j++)
+            //{
+            //    i = Codeuctivity.ImageSharpCompare.CalcDiff(
+            //        pBase + $"Hicksville, NY_180222-1415_spot{j}.jpg",
+            //        pBase + $"Hicksville, NY_180222-1537_spot{j}.jpg");
+            //
+            //    Debug.WriteLine($"{j} = {i.AbsoluteError}, {i.MeanError}, {i.PixelErrorCount}, {i.PixelErrorPercentage}");
+            //}
+
+
+
         }
 
         private void MonoDragEnter(object sender, DragEventArgs e)

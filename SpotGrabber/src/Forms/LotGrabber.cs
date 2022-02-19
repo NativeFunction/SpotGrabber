@@ -26,7 +26,9 @@ namespace SpotGrabber
         XmlElement ccNode;
         List<CameraData> cams = new List<CameraData>();
         int contextMenuIndex = 0;
-
+        bool exportSpotsLoop = false;
+        Timer ExportSpotsLoopTimer;
+        EventHandler ExportSpotsLoopEvent;
 
 
         public LotGrabberForm()
@@ -79,25 +81,25 @@ namespace SpotGrabber
             CameraData cam = new CameraData();
             AddCameraForm acf = new AddCameraForm(ref cam);
             acf.ShowDialog();
-            
+
             if (cam.IsValid())
             {
-            
+
                 cam.CreateXML(camDoc, ccNode);
-            
-            
+
+
                 camDoc.Save("Data/Cams.xml");
                 cams.Add(cam);
-            
-            
+
+
                 CamTable.Rows.Add(cam.Name, Enum.GetName(typeof(CameraManufacturer), cam.Manufacturer), Enum.GetName(typeof(CameraQuality), cam.Quality), $"≈ {cam.Angle}°", Enum.GetName(typeof(LotSize), cam.LotSize), cam.LastCaptureDate, cam.Template.Rects.Count.ToString());
-            
+
             }
 
 
         }
 
-        private void ExportSpotsButtonClick(object sender, EventArgs e)
+        private void ExportSpots()
         {
             Directory.CreateDirectory("Data/Spots");
             Directory.CreateDirectory("Data/Spots/Empty");//for later manual sort
@@ -111,7 +113,7 @@ namespace SpotGrabber
                 {
                     cam.UpdateLastCaptureDate();
                     cam.UpdateXMLLastCaptureDate(camNodes[index]);
-                    
+
                     cam.Template.ExportImages($"Data/Spots/{cam.Name}_{cam.LastCaptureDate}", bm);
 
                     if (index == cams.Count - 1)
@@ -122,9 +124,50 @@ namespace SpotGrabber
                 }, i);
                 i++;
             }
-            
         }
 
+        private void ExportSpotsButtonClick(object sender, EventArgs e)
+        {
+            ExportSpots();
+        }
+
+
+        private void ExportSpotsLoopButton_Click(object sender, EventArgs e)
+        {
+
+            this.AddCameraButton.Enabled = exportSpotsLoop;
+            this.CamTable.Enabled = exportSpotsLoop;
+
+            exportSpotsLoop = !exportSpotsLoop;
+
+            if (exportSpotsLoop)
+            {
+                ExportSpotsLoopTimer = new Timer();
+
+
+                ExportSpotsLoopTimer.Tick += ExportSpotsLoopEvent = new EventHandler(ExportSpotsButtonClick);
+
+                ExportSpotsLoopTimer.Interval = 60 * 60 * 1000;//60 min
+                ExportSpotsLoopTimer.Enabled = true;
+                ExportSpotsLoopTimer.Start();
+
+                ExportSpotsLoopButton.Text = "Export Spots Every Hour: On";
+
+            }
+            else
+            {
+                ExportSpotsLoopTimer.Enabled = false;
+                ExportSpotsLoopTimer.Stop();
+                ExportSpotsLoopTimer.Tick -= ExportSpotsLoopEvent;
+                ExportSpotsLoopEvent = null;
+
+                ExportSpotsLoopButton.Text = "Export Spots Every Hour: Off";
+            }
+
+
+
+
+        }
 
         private void CamTableCellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -158,9 +201,9 @@ namespace SpotGrabber
             {
                 cams[contextMenuIndex] = cam;
                 XmlNode camNode = ccNode.SelectNodes("/CamCollection/Item")[contextMenuIndex];
-                
+
                 cam.UpdateXML(camDoc, camNode);
-                
+
                 camDoc.Save("Data/Cams.xml");
                 RefreshCamTable();
             }
@@ -178,7 +221,7 @@ namespace SpotGrabber
 
         void RefreshCamTable()
         {
-            for(int i = 0; i < cams.Count; i++)
+            for (int i = 0; i < cams.Count; i++)
             {
 
                 CamTable.Rows[i].Cells[0].Value = cams[i].Name;
@@ -193,5 +236,6 @@ namespace SpotGrabber
 
 
         }
+
     }
 }
