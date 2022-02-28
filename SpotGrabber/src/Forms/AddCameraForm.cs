@@ -54,7 +54,25 @@ namespace SpotGrabber
                 return;
             }
 
+            if (LatitudeTextBox.Text != "" && float.TryParse(LatitudeTextBox.Text, out float lat))
+            {
+                Cam.Latitude = lat;
+            }
+            else
+            {
+                MessageBox.Show("Latitude is not set", "Error");
+                return;
+            }
 
+            if (LongitudeTextBox.Text != "" && float.TryParse(LongitudeTextBox.Text, out float lon))
+            {
+                Cam.Longitude = lon;
+            }
+            else
+            {
+                MessageBox.Show("Longitude is not set", "Error");
+                return;
+            }
 
             if (ManufacturerComboBox.Text != "" && Enum.TryParse(ManufacturerComboBox.Text, out CameraManufacturer cm))
                 Cam.Manufacturer = cm;

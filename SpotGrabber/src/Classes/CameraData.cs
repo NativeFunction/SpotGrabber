@@ -19,6 +19,8 @@ namespace SpotGrabber
     public class CameraData
     {
         public string Name = "";
+        public float Latitude = 0;
+        public float Longitude = 0;
         public CameraManufacturer Manufacturer = CameraManufacturer.None;
         public string Url = "";
         public CameraQuality Quality = CameraQuality.None;
@@ -32,6 +34,8 @@ namespace SpotGrabber
         public CameraData(CameraData cam) 
         {
             Name = cam.Name;
+            Latitude = cam.Latitude;
+            Longitude = cam.Longitude;
             Manufacturer = cam.Manufacturer;
             Url = cam.Url;
             Quality = cam.Quality;
@@ -49,6 +53,9 @@ namespace SpotGrabber
 
             temp = camNode.SelectSingleNode("Name");
             Name = temp?.InnerText;
+            temp = camNode.SelectSingleNode("Position");
+            float.TryParse(temp?.Attributes.GetNamedItem("lat")?.InnerText, out Latitude);
+            float.TryParse(temp?.Attributes.GetNamedItem("lon")?.InnerText, out Longitude);
             temp = camNode.SelectSingleNode("Manufacturer");
             Enum.TryParse(temp?.InnerText, out Manufacturer);
             temp = camNode.SelectSingleNode("Url");
@@ -85,6 +92,11 @@ namespace SpotGrabber
             element.InnerText = Name;
             itemNode.AppendChild(element);
 
+            element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "Position", "");
+            element.SetAttribute("lat", Latitude.ToString());
+            element.SetAttribute("lon", Longitude.ToString());
+            itemNode.AppendChild(element);
+
             element = (XmlElement)doc.CreateNode(XmlNodeType.Element, "Manufacturer", "");
             element.InnerText = Manufacturer.ToString();
             itemNode.AppendChild(element);
@@ -119,6 +131,10 @@ namespace SpotGrabber
 
             element = (XmlElement)baseNode.SelectSingleNode("Name");
             element.InnerText = Name;
+
+            element = (XmlElement)baseNode.SelectSingleNode("Position");
+            element.SetAttribute("lat", Latitude.ToString());
+            element.SetAttribute("lon", Longitude.ToString());
 
             //no need to update non-updatable options
             //element = (XmlElement)baseNode.SelectSingleNode("Manufacturer");

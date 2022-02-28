@@ -41,6 +41,10 @@ namespace SpotGrabber.src.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.Mono = new SpotGrabber.MonoDraw();
+            this.label8 = new System.Windows.Forms.Label();
+            this.LongitudeTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.LatitudeTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ReloadCameraButton
@@ -78,7 +82,7 @@ namespace SpotGrabber.src.Forms
             // 
             // LotSizeComboBox
             // 
-            this.LotSizeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.LotSizeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LotSizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LotSizeComboBox.FormattingEnabled = true;
             this.LotSizeComboBox.Items.AddRange(new object[] {
@@ -92,7 +96,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(408, 576);
             this.label7.Name = "label7";
@@ -102,7 +106,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label6
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(214, 576);
             this.label6.Name = "label6";
@@ -112,7 +116,7 @@ namespace SpotGrabber.src.Forms
             // 
             // CameraAngleTextBox
             // 
-            this.CameraAngleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CameraAngleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CameraAngleTextBox.Location = new System.Drawing.Point(217, 596);
             this.CameraAngleTextBox.Name = "CameraAngleTextBox";
             this.CameraAngleTextBox.Size = new System.Drawing.Size(173, 22);
@@ -144,7 +148,7 @@ namespace SpotGrabber.src.Forms
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 576);
             this.label1.Name = "label1";
@@ -154,7 +158,7 @@ namespace SpotGrabber.src.Forms
             // 
             // NameTextBox
             // 
-            this.NameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.NameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.NameTextBox.Location = new System.Drawing.Point(15, 596);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(173, 22);
@@ -175,11 +179,51 @@ namespace SpotGrabber.src.Forms
             this.Mono.TabIndex = 18;
             this.Mono.Text = "Mono";
             // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(408, 630);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 17);
+            this.label8.TabIndex = 39;
+            this.label8.Text = "Longitude:";
+            // 
+            // LongitudeTextBox
+            // 
+            this.LongitudeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LongitudeTextBox.Location = new System.Drawing.Point(411, 650);
+            this.LongitudeTextBox.Name = "LongitudeTextBox";
+            this.LongitudeTextBox.Size = new System.Drawing.Size(173, 22);
+            this.LongitudeTextBox.TabIndex = 38;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(214, 630);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 17);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "Latitude:";
+            // 
+            // LatitudeTextBox
+            // 
+            this.LatitudeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LatitudeTextBox.Location = new System.Drawing.Point(217, 650);
+            this.LatitudeTextBox.Name = "LatitudeTextBox";
+            this.LatitudeTextBox.Size = new System.Drawing.Size(173, 22);
+            this.LatitudeTextBox.TabIndex = 36;
+            // 
             // EditCameraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 702);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.LongitudeTextBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.LatitudeTextBox);
             this.Controls.Add(this.ReloadCameraButton);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.UpdateButton);
@@ -215,5 +259,9 @@ namespace SpotGrabber.src.Forms
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox NameTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox LongitudeTextBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox LatitudeTextBox;
     }
 }

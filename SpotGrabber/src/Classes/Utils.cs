@@ -39,6 +39,18 @@ namespace SpotGrabber
             return p.X >= 0 && p.Y >= 0 && p.X < bounds.Width && p.Y < bounds.Height;
         }
 
+        public static TimeZoneInfo GetTimeZone(string id)
+        {
+            try
+            {
+                return TimeZoneInfo.FindSystemTimeZoneById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
 
     }

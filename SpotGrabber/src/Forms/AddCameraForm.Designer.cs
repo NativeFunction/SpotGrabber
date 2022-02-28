@@ -45,6 +45,10 @@ namespace SpotGrabber
             this.CancelButton = new System.Windows.Forms.Button();
             this.Mono = new SpotGrabber.MonoDraw();
             this.LoadCameraButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.LatitudeTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.LongitudeTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // NameTextBox
@@ -226,11 +230,51 @@ namespace SpotGrabber
             this.LoadCameraButton.UseVisualStyleBackColor = true;
             this.LoadCameraButton.Click += new System.EventHandler(this.LoadCameraButtonClick);
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(188, 648);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 17);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "Latitude:";
+            // 
+            // LatitudeTextBox
+            // 
+            this.LatitudeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LatitudeTextBox.Location = new System.Drawing.Point(191, 668);
+            this.LatitudeTextBox.Name = "LatitudeTextBox";
+            this.LatitudeTextBox.Size = new System.Drawing.Size(173, 22);
+            this.LatitudeTextBox.TabIndex = 19;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(367, 648);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(75, 17);
+            this.label8.TabIndex = 22;
+            this.label8.Text = "Longitude:";
+            // 
+            // LongitudeTextBox
+            // 
+            this.LongitudeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LongitudeTextBox.Location = new System.Drawing.Point(370, 668);
+            this.LongitudeTextBox.Name = "LongitudeTextBox";
+            this.LongitudeTextBox.Size = new System.Drawing.Size(173, 22);
+            this.LongitudeTextBox.TabIndex = 21;
+            // 
             // AddCameraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 748);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.LongitudeTextBox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.LatitudeTextBox);
             this.Controls.Add(this.LoadCameraButton);
             this.Controls.Add(this.Mono);
             this.Controls.Add(this.CancelButton);
@@ -273,5 +317,9 @@ namespace SpotGrabber
         private new System.Windows.Forms.Button CancelButton;
         private MonoDraw Mono;
         private System.Windows.Forms.Button LoadCameraButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox LatitudeTextBox;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox LongitudeTextBox;
     }
 }

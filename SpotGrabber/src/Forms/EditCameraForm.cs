@@ -23,6 +23,9 @@ namespace SpotGrabber.src.Forms
             CameraAngleTextBox.Text = Cam.Angle.ToString();
             NameTextBox.Text = Cam.Name;
 
+            LatitudeTextBox.Text = Cam.Latitude.ToString();
+            LongitudeTextBox.Text = Cam.Longitude.ToString();
+
             LotSizeComboBox.SelectedIndex = (int)Cam.LotSize;
             VideoQualityComboBox.SelectedIndex = (int)Cam.Quality;
 
@@ -57,6 +60,16 @@ namespace SpotGrabber.src.Forms
         {
 
             Cam.Name = NameTextBox.Text;
+
+            if (LatitudeTextBox.Text != "" && float.TryParse(LatitudeTextBox.Text, out float lat))
+            {
+                Cam.Latitude = lat;
+            }
+
+            if (LongitudeTextBox.Text != "" && float.TryParse(LongitudeTextBox.Text, out float lon))
+            {
+                Cam.Longitude = lon;
+            }
 
             if (Enum.TryParse(VideoQualityComboBox.Text, out CameraQuality cq))
                 Cam.Quality = cq;
