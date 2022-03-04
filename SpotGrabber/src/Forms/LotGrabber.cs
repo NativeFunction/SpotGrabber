@@ -121,7 +121,14 @@ namespace SpotGrabber
 
 
                     if (utc < sunrise || utc > sunset)
+                    {
+                        if (i == cams.Count - 1)
+                        {
+                            camDoc.Save("Data/Cams.xml");
+                            RefreshCamTable();
+                        }
                         continue;
+                    }
                 }
 
 
@@ -136,6 +143,7 @@ namespace SpotGrabber
                         camDoc.Save("Data/Cams.xml");
                         RefreshCamTable();
                     }
+
                 }, i);
 
             }
