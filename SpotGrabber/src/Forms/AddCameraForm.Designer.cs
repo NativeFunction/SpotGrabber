@@ -29,6 +29,7 @@ namespace SpotGrabber
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddCameraForm));
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -291,6 +292,7 @@ namespace SpotGrabber
             this.Controls.Add(this.CameraURLTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.NameTextBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1002, 795);
             this.Name = "AddCameraForm";
             this.Text = "Add Camera";

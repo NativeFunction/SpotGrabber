@@ -30,12 +30,9 @@ namespace SpotGrabber
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LotGrabberForm));
             this.AddCameraButton = new System.Windows.Forms.Button();
             this.CamTable = new System.Windows.Forms.DataGridView();
-            this.ExportSpotsButton = new System.Windows.Forms.Button();
-            this.CamTableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.EditCamContextMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExportSpotsLoopButton = new System.Windows.Forms.Button();
             this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Longitute = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,6 +42,10 @@ namespace SpotGrabber
             this.LotSizeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LastCaptureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SpotCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExportSpotsButton = new System.Windows.Forms.Button();
+            this.CamTableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.EditCamContextMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportSpotsLoopButton = new System.Windows.Forms.Button();
             this.DaytimeExportCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.CamTable)).BeginInit();
             this.CamTableContextMenu.SuspendLayout();
@@ -93,43 +94,6 @@ namespace SpotGrabber
             this.CamTable.Size = new System.Drawing.Size(927, 394);
             this.CamTable.TabIndex = 5;
             this.CamTable.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.CamTableCellMouseUp);
-            // 
-            // ExportSpotsButton
-            // 
-            this.ExportSpotsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExportSpotsButton.Location = new System.Drawing.Point(596, 412);
-            this.ExportSpotsButton.Name = "ExportSpotsButton";
-            this.ExportSpotsButton.Size = new System.Drawing.Size(116, 38);
-            this.ExportSpotsButton.TabIndex = 6;
-            this.ExportSpotsButton.Text = "Export Spots";
-            this.ExportSpotsButton.UseVisualStyleBackColor = true;
-            this.ExportSpotsButton.Click += new System.EventHandler(this.ExportSpotsButtonClick);
-            // 
-            // CamTableContextMenu
-            // 
-            this.CamTableContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.CamTableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EditCamContextMenu});
-            this.CamTableContextMenu.Name = "CamTableContextMenu";
-            this.CamTableContextMenu.Size = new System.Drawing.Size(139, 28);
-            // 
-            // EditCamContextMenu
-            // 
-            this.EditCamContextMenu.Name = "EditCamContextMenu";
-            this.EditCamContextMenu.Size = new System.Drawing.Size(138, 24);
-            this.EditCamContextMenu.Text = "Edit Cam";
-            this.EditCamContextMenu.Click += new System.EventHandler(this.EditCamContextMenuClick);
-            // 
-            // ExportSpotsLoopButton
-            // 
-            this.ExportSpotsLoopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExportSpotsLoopButton.Location = new System.Drawing.Point(738, 412);
-            this.ExportSpotsLoopButton.Name = "ExportSpotsLoopButton";
-            this.ExportSpotsLoopButton.Size = new System.Drawing.Size(201, 38);
-            this.ExportSpotsLoopButton.TabIndex = 7;
-            this.ExportSpotsLoopButton.Text = "Export Spots Every Hour: Off ";
-            this.ExportSpotsLoopButton.UseVisualStyleBackColor = true;
-            this.ExportSpotsLoopButton.Click += new System.EventHandler(this.ExportSpotsLoopButton_Click);
             // 
             // NameColumn
             // 
@@ -212,6 +176,43 @@ namespace SpotGrabber
             this.SpotCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SpotCount.Width = 125;
             // 
+            // ExportSpotsButton
+            // 
+            this.ExportSpotsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExportSpotsButton.Location = new System.Drawing.Point(596, 412);
+            this.ExportSpotsButton.Name = "ExportSpotsButton";
+            this.ExportSpotsButton.Size = new System.Drawing.Size(116, 38);
+            this.ExportSpotsButton.TabIndex = 6;
+            this.ExportSpotsButton.Text = "Export Spots";
+            this.ExportSpotsButton.UseVisualStyleBackColor = true;
+            this.ExportSpotsButton.Click += new System.EventHandler(this.ExportSpotsButtonClick);
+            // 
+            // CamTableContextMenu
+            // 
+            this.CamTableContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.CamTableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditCamContextMenu});
+            this.CamTableContextMenu.Name = "CamTableContextMenu";
+            this.CamTableContextMenu.Size = new System.Drawing.Size(139, 28);
+            // 
+            // EditCamContextMenu
+            // 
+            this.EditCamContextMenu.Name = "EditCamContextMenu";
+            this.EditCamContextMenu.Size = new System.Drawing.Size(138, 24);
+            this.EditCamContextMenu.Text = "Edit Cam";
+            this.EditCamContextMenu.Click += new System.EventHandler(this.EditCamContextMenuClick);
+            // 
+            // ExportSpotsLoopButton
+            // 
+            this.ExportSpotsLoopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExportSpotsLoopButton.Location = new System.Drawing.Point(738, 412);
+            this.ExportSpotsLoopButton.Name = "ExportSpotsLoopButton";
+            this.ExportSpotsLoopButton.Size = new System.Drawing.Size(201, 38);
+            this.ExportSpotsLoopButton.TabIndex = 7;
+            this.ExportSpotsLoopButton.Text = "Export Spots Every Hour: Off ";
+            this.ExportSpotsLoopButton.UseVisualStyleBackColor = true;
+            this.ExportSpotsLoopButton.Click += new System.EventHandler(this.ExportSpotsLoopButton_Click);
+            // 
             // DaytimeExportCheckBox
             // 
             this.DaytimeExportCheckBox.AutoSize = true;
@@ -232,6 +233,7 @@ namespace SpotGrabber
             this.Controls.Add(this.ExportSpotsButton);
             this.Controls.Add(this.CamTable);
             this.Controls.Add(this.AddCameraButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(480, 360);
             this.Name = "LotGrabberForm";
             this.Text = "LotGrabber";

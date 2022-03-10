@@ -29,6 +29,7 @@ namespace SpotGrabber
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestForm));
             this.ClearRectsButton = new System.Windows.Forms.Button();
             this.SaveTemplateButton = new System.Windows.Forms.Button();
             this.LoadTemplateButton = new System.Windows.Forms.Button();
@@ -108,6 +109,7 @@ namespace SpotGrabber
             this.Controls.Add(this.SaveTemplateButton);
             this.Controls.Add(this.Mono);
             this.Controls.Add(this.ClearRectsButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(480, 360);
             this.Name = "TestForm";
             this.Text = "SpotGrabber";
