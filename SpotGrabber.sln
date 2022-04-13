@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotGrabber", "SpotGrabber\SpotGrabber.csproj", "{97C4A05B-9597-4EE2-94C9-E2028F454466}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotGrabberML.Model", "ExampleModels\GenericParkingLot\GenericParkingLot.Model\GenericParkingLot.Model.csproj", "{7BF39205-31C5-43FF-B11A-66F9D86E9240}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotGrabberML.ConsoleApp", "ExampleModels\GenericParkingLot\GenericParkingLot.ConsoleApp\GenericParkingLot.ConsoleApp.csproj", "{27A8DD22-CC30-490B-A24E-9452BFF81D60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{97C4A05B-9597-4EE2-94C9-E2028F454466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97C4A05B-9597-4EE2-94C9-E2028F454466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97C4A05B-9597-4EE2-94C9-E2028F454466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BF39205-31C5-43FF-B11A-66F9D86E9240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BF39205-31C5-43FF-B11A-66F9D86E9240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BF39205-31C5-43FF-B11A-66F9D86E9240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BF39205-31C5-43FF-B11A-66F9D86E9240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27A8DD22-CC30-490B-A24E-9452BFF81D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27A8DD22-CC30-490B-A24E-9452BFF81D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27A8DD22-CC30-490B-A24E-9452BFF81D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27A8DD22-CC30-490B-A24E-9452BFF81D60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
