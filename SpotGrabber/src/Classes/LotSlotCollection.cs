@@ -629,9 +629,9 @@ namespace SpotGrabber
                         l.Resolution(snapshotWidth, snapshotHeight);
 
                         l.Rotate(-MyMathHelper.RadToDeg(Rects[i].Rotation));
-
                         l.Crop(new System.Drawing.Rectangle(MyMathHelper.Clamp((l.Image.Width - rectWidthNoRot) / 2, 0, l.Image.Width), MyMathHelper.Clamp((l.Image.Height - rectHeightNoRot) / 2, 0, l.Image.Height), rectWidthNoRot, rectHeightNoRot));
-                        l.Save(path + $"_spot" + i.ToString() + ".jpg");
+                        l.Format(new PngFormat());
+                        l.Save(path + $"_spot" + i.ToString() + ".png");
                     }
 
                 }
