@@ -215,6 +215,7 @@ namespace SpotGrabber
             // 
             // DaytimeExportCheckBox
             // 
+            this.DaytimeExportCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DaytimeExportCheckBox.AutoSize = true;
             this.DaytimeExportCheckBox.Location = new System.Drawing.Point(738, 462);
             this.DaytimeExportCheckBox.Name = "DaytimeExportCheckBox";

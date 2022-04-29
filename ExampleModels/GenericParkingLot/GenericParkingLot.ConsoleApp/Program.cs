@@ -18,7 +18,7 @@ namespace GenericParkingLot.ConsoleApp
             };
 
 
-            var predictionResult = ConsumeModel.Predict(sampleData);//300 ms per image - 500 images = 2.4s
+            var predictionResult = ConsumeModel.Predict(sampleData);//4.8 ms per image - 500 images = 2.4s
 
             
 
@@ -31,29 +31,32 @@ namespace GenericParkingLot.ConsoleApp
         static void Main(string[] args)
         {
 
-            Console.Write("Input path to image for test: ");
-            string path = Console.ReadLine();
-
-            path = path.Replace("\"", "");//fixes quote path error
-
-
-            FileAttributes attr = File.GetAttributes(path);
-            if (attr.HasFlag(FileAttributes.Directory))
+            while (true)
             {
-                string[] files = Directory.GetFiles(path);
-                int filled = 0;
+                Console.Write("Input path to image for test: ");
+                string path = Console.ReadLine();
 
-                foreach(var i in files)
+                path = path.Replace("\"", "");//fixes quote path error
+
+
+                FileAttributes attr = File.GetAttributes(path);
+                if (attr.HasFlag(FileAttributes.Directory))
                 {
-                    if (Predict(i))
-                        filled++;
+                    string[] files = Directory.GetFiles(path);
+                    int filled = 0;
+
+                    foreach (var i in files)
+                    {
+                        if (Predict(i))
+                            filled++;
+                    }
+
+                    Console.WriteLine($"Parking lot percent filled = { (files.Length == 0 ? 0 : 100 * filled / files.Length) }%");
                 }
+                else
+                    Predict(path);
 
-                Console.WriteLine($"Parking lot percent filled = { (files.Length == 0 ? 0 : 100*filled/files.Length) }%");
             }
-            else
-                Predict(path);
-
 
             Console.WriteLine("=============== End of process, hit any key to finish ===============");
             Console.ReadKey();
